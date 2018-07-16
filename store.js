@@ -20,7 +20,6 @@ module.exports = {
         	id: user.id,
         	premissions: user.premissions
         	}
-        console.log(myData)
         return {data: myData}
       })
   },

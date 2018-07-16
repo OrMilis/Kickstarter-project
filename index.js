@@ -18,13 +18,15 @@ app.post('/createUser', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
+  console.log(res)
   store.authenticate({
       username: req.body.username,
       password: req.body.password
     })
     .then(({ data }) => {
-    	console.log(data)
-      if (data['success']) res.send(data)
+      if (data.success){
+        res.send(data)
+      }
       else res.sendStatus(401)
     })
 })
