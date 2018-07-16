@@ -42,5 +42,5 @@ app.post('/createProject', (req, res) => {
 })
 
 app.listen(7555, () => {
-  console.log('Server running on http://localhost:7555')
+  console.log('Server running on http://172.40.0.116:7555')
 })

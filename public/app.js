@@ -18,8 +18,8 @@ Login.addEventListener('submit', (e) => {
   post('/login', { username, password })
     .then(({ status }) => {
       if (status === 401)
-        alert('login failed ')
-      else 
+        alert('login failed')
+      else
         {
           alert('login success' + status.id)
         }
