@@ -13,14 +13,20 @@ module.exports = {
     console.log(`Authenticating user ${username}`)
     return knex('users').where({ username })
       .then(([user]) => {
-        if (!user) return { success: false }
-        const { hash } = saltHashPassword({password, salt: user.salt})
-        var myData = {
-        	success: hash === user.encrypted_password,
-        	id: user.id,
-        	premissions: user.premissions
-        	}
-        return {data: myData}
+				var data = {
+					success: false,
+					id: '',
+					premissions: ''
+					}
+        if (!user){
+					data.success = false
+				} else {
+					const { hash } = saltHashPassword({password, salt: user.salt})
+					data.success = hash === user.encrypted_password,
+					data.id = user.id,
+					data.premissions = user.premissions
+					return data;
+				}
       })
   },
 

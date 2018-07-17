@@ -14,18 +14,12 @@ Login.addEventListener('submit', (e) => {
   e.preventDefault()
   const username = Login.querySelector('.username').value
   const password = Login.querySelector('.password').value
-  var data = post('/login', { username, password })
-    .then((_) => {
-      if (status === 401)
-        alert('login failed')
-      else
-        {
-          alert('login success ' + ' ' + JSON.stringify(_))
-          console.log(_);
-          //logedInUser = {username, status.id, status.premissions}
-          //console.log(logedInUser);
-        }
-    })
+  post('/login', { username, password })
+  .then(response => {
+    if(response.ok)
+    return response.text();
+  })
+  .then(data => {console.log(data);})
 })
 
 const CreateProject = document.querySelector('.CreateProject')
