@@ -32,7 +32,7 @@ module.exports = {
 
   createProject(data) {
 		console.log('Data = ', data);
-  	console.log(`Project created: ${data.id}, ${data.project_name},
+  	console.log(`Project created: ${data.user_id}, ${data.project_name},
   		${data.start_date}, ${data.end_date}, ${data.backers},
   		 ${data.investment}, ${data.pledged}`)
   	return knex('projects').insert({
