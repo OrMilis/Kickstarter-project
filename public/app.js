@@ -38,12 +38,12 @@ Login.addEventListener('submit', (e) => {
 const CreateProject = document.querySelector('.CreateProject')
 CreateProject.addEventListener('submit', (e) => {
   e.preventDefault()
-  const id = logedInUser.id;
+  const user_id = logedInUser.id;
   const project_name = CreateProject.querySelector('.project_name').value
   const start_date = CreateProject.querySelector('.start_date').value
   const end_date = CreateProject.querySelector('.end_date').value
   const investment = CreateProject.querySelector('.investment').value
-  post('/CreateProject', {id, project_name, start_date,end_date, investment})
+  post('/CreateProject', {user_id, project_name, start_date,end_date, investment})
 })
 
 function post (path, data) {
