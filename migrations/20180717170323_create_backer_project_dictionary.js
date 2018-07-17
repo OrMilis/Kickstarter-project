@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
     table.foreign('project_id').references('projects.user_id')
     table.integer('user_id').unsigned()
     table.foreign('user_id').references('users.id')
-  }
 };
 
 exports.down = function(knex, Promise) {
