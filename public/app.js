@@ -1,5 +1,8 @@
 
-var logedInUser = {username, id, permissions}
+var logedInUser = {
+  username: '',
+  id: -1,
+  permissions: ''}
 
 const CreateUser = document.querySelector('.CreateUser')
 CreateUser.addEventListener('submit', (e) => {
@@ -20,10 +23,12 @@ Login.addEventListener('submit', (e) => {
     return response.text();
   })
   .then(data => {
+    data = JSON.parse(data);
     logedInUser.username = username;
     logedInUser.id = data.id;
     logedInUser.permissions = data.permissions;
     console.log(data);
+    console.log(logedInUser);
   })
 })
 
@@ -47,5 +52,15 @@ function post (path, data) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
+  })
+}
+
+function get (path) {
+  return window.fetch(path, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
   })
 }
