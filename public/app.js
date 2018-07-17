@@ -30,18 +30,20 @@ Login.addEventListener('submit', (e) => {
     console.log(data);
     console.log(logedInUser);
   })
+  .catch(error => {
+    console.log('Error is', error);
+  })
 })
 
 const CreateProject = document.querySelector('.CreateProject')
 CreateProject.addEventListener('submit', (e) => {
   e.preventDefault()
+  const id = logedInUser.id;
   const project_name = CreateProject.querySelector('.project_name').value
   const start_date = CreateProject.querySelector('.start_date').value
   const end_date = CreateProject.querySelector('.end_date').value
-  const backers = 0
   const investment = CreateProject.querySelector('.investment').value
-  const pledged = 0
-  post('/CreateProject', { project_name, start_date,end_date, backers, investment, pledged })
+  post('/CreateProject', {id, project_name, start_date,end_date, investment})
 })
 
 function post (path, data) {

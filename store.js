@@ -30,11 +30,14 @@ module.exports = {
       })
   },
 
-  createProject(project_data) {
-  	console.log(`Project created: ${project_data.name},
-  		${start_date}, ${end_date}, ${backers},
-  		 ${investment}, ${pledged}`)
-  	return knex('projects').insert({project_name, start_date, end_date, backers, investment, pledged})
+  createProject(data) {
+		console.log('Data = ', data);
+  	console.log(`Project created: ${data.user_id}, ${data.project_name},
+  		${data.start_date}, ${data.end_date}, ${data.backers},
+  		 ${data.investment}, ${data.pledged}`)
+  	return knex('projects').insert(data.project_name,
+			data.start_date, data.end_date,
+			data.backers, data.investment, data.pledged)
   }
 }
 

@@ -32,6 +32,7 @@ app.post('/login', (req, res) => {
 
 app.post('/createProject', (req, res) => {
   store.createProject({
+      id: req.body.id,
       project_name: req.body.project_name,
       start_date: req.body.start_date,
       end_date: req.body.end_date,
