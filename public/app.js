@@ -1,5 +1,5 @@
 
-//var logedInUser = {username, id, premissions}
+var logedInUser = {username, id, permissions}
 
 const CreateUser = document.querySelector('.CreateUser')
 CreateUser.addEventListener('submit', (e) => {
@@ -19,7 +19,12 @@ Login.addEventListener('submit', (e) => {
     if(response.ok)
     return response.text();
   })
-  .then(data => {console.log(data);})
+  .then(data => {
+    logedInUser.username = username;
+    logedInUser.id = data.id;
+    logedInUser.permissions = data.permissions;
+    console.log(data);
+  })
 })
 
 const CreateProject = document.querySelector('.CreateProject')

@@ -16,7 +16,7 @@ module.exports = {
 				var data = {
 					success: false,
 					id: '',
-					premissions: ''
+					permissions: ''
 					}
         if (!user){
 					data.success = false
@@ -24,15 +24,14 @@ module.exports = {
 					const { hash } = saltHashPassword({password, salt: user.salt})
 					data.success = hash === user.encrypted_password,
 					data.id = user.id,
-					data.premissions = user.premissions
+					data.permissions = user.permissions
 					return data;
 				}
       })
   },
 
-  createProject({project_name, start_date, end_date,
-  	backers, investment, pledged}) {
-  	console.log(`Project created: ${project_name},
+  createProject(project_data) {
+  	console.log(`Project created: ${project_data.name},
   		${start_date}, ${end_date}, ${backers},
   		 ${investment}, ${pledged}`)
   	return knex('projects').insert({project_name, start_date, end_date, backers, investment, pledged})
