@@ -43,6 +43,16 @@ app.post('/createProject', (req, res) => {
     .then(() => res.sendStatus(200))
 })
 
+app.post('/Invest', (req, res) => {
+  //console.log(req.body.user_id,req.body.project_name,req.body.investment  );
+  store.Invest({
+      user_id: req.body.user_id,
+      project_name: req.body.project_name,
+      investment: req.body.investment
+    })
+    .then(() => res.sendStatus(200))
+})
+
 app.listen(7555, () => {
   console.log('Server running on http://172.40.0.116:7555')
 })

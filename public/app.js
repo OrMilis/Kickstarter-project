@@ -46,6 +46,15 @@ CreateProject.addEventListener('submit', (e) => {
   post('/CreateProject', {user_id, project_name, start_date,end_date, investment})
 })
 
+const Invest = document.querySelector('.Invest')
+Invest.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const user_id = logedInUser.id;
+  const project_name = Invest.querySelector('.project_name').value
+  const investment = Invest.querySelector('.investment').value
+  post('/Invest', {user_id, project_name, investment})
+})
+
 function post (path, data) {
   return window.fetch(path, {
     method: 'POST',

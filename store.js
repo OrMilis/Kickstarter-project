@@ -43,7 +43,25 @@ module.exports = {
 			backers: data.backers,
 			investment: data.investment,
 			pledged: data.pledged});
+  },
+
+	Invest(data) { //{ user_id, project_name, }
+		console.log('Data = ', data);
+  	console.log(`user id: ${data.user_id} will invest in: ${data.project_name}
+  	amount of: ${data.investment}`)
+		return knex('projects').where({project_name: data.project_name})
+		.then(([project]) => {
+			console.log(project);
+			project.backers++;
+			project.pledged+=data.investment
+	  	return knex('projectInvest').insert({
+				user_id: data.user_id,
+				project_id: project.id
+				});
+		})
+
   }
+
 }
 
 function saltHashPassword ({password, salt = randomString()}) {
