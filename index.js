@@ -32,6 +32,7 @@ app.post('/login', (req, res) => {
 
 app.post('/createProject', (req, res) => {
   store.createProject({
+      user_name: req.body.user_name,
       user_id: req.body.user_id,
       project_name: req.body.project_name,
       start_date: req.body.start_date,
@@ -52,6 +53,16 @@ app.post('/Invest', (req, res) => {
     })
     .then(() => res.sendStatus(200))
 })
+
+//TODO: findAllProjects
+
+//TODO: findAllUsers
+
+//TODO: removeProject
+
+//TODO: updateProject
+
+//TODO: getProjectSite
 
 app.listen(7555, () => {
   console.log('Server running on http://172.40.0.116:7555')

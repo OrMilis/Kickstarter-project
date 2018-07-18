@@ -1,6 +1,7 @@
 // JavaScript source code
 const crypto = require('crypto')
 const knex = require('knex')(require('./knexfile'))
+const fs = require('fs-extra')
 
 module.exports = {
 	saltHashPassword, createUser ({ username, password }) {
@@ -42,7 +43,13 @@ module.exports = {
 			end_date: data.end_date,
 			backers: data.backers,
 			investment: data.investment,
-			pledged: data.pledged});
+			pledged: data.pledged})
+			.then(() => {
+				fs.outputFile(`./projects/${data.user_name}/${data.project_name}.json`,
+					JSON.stringify(data))
+				.then(() => {console.log('Saved!');})
+				.catch(err => {console.log(err);})
+			})
   },
 
 	Invest(data) { //{ user_id, project_name, }
@@ -52,16 +59,28 @@ module.exports = {
 		return knex('projects').where({project_name: data.project_name})
 		.then(([project]) => {
 			console.log(project);
-			project.backers++;
-			project.pledged+=data.investment
-	  	return knex('projectInvest').insert({
-				user_id: data.user_id,
-				project_id: project.id
-				});
+			return knex('projects').where({project_name: data.project_name})
+			.update({backers: ++project.backers,
+				pledged: project.pledged+=data.investment})
+				.then(() => {
+					return knex('projectInvest').insert({
+						user_id: data.user_id,
+						project_id: project.id,
+						amount: parseInt(data.investment)
+					});
+				})
 		})
+  },
 
-  }
+	//TODO: findAllProjects
 
+	//TODO: findAllUsers
+
+	//TODO: removeProject
+
+	//TODO: updateProject
+
+	//TODO: getProjectSite
 }
 
 function saltHashPassword ({password, salt = randomString()}) {
