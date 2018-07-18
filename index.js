@@ -39,9 +39,12 @@ app.post('/createProject', (req, res) => {
       end_date: req.body.end_date,
       backers: 0,
       investment: req.body.investment,
-      pledged: 0
+      pledged: 0,
+      project_info: req.body.project_info
     })
-    .then(() => res.sendStatus(200))
+    .then((site) => {
+      console.log("IN INDEX.JS  " + site);
+    })
 })
 
 app.post('/Invest', (req, res) => {

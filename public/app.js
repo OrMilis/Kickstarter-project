@@ -45,7 +45,19 @@ CreateProject.addEventListener('submit', (e) => {
   const start_date = CreateProject.querySelector('.start_date').value
   const end_date = CreateProject.querySelector('.end_date').value
   const investment = CreateProject.querySelector('.investment').value
-  post('/CreateProject', {user_name, user_id, project_name, start_date,end_date, investment})
+  const project_info = CreateProject.querySelector('.project_info').value
+  post('/CreateProject', {user_name, user_id, project_name, start_date,end_date, investment, project_info})
+  .then(response => {
+    if(response.ok)
+    return response.text();
+  })
+  .then(data => {
+    data = JSON.parse(data);
+    document.querySelector('.Body').innerHTML = data.html;
+  })
+  .catch(error => {
+    console.log('Error is', error);
+  })
 })
 
 const Invest = document.querySelector('.Invest')

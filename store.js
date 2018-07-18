@@ -31,6 +31,7 @@ module.exports = {
       })
   },
 
+//FIXME: Read back bug
   createProject(data) {
 		console.log('Data = ', data);
   	console.log(`Project created: ${data.user_id}, ${data.project_name},
@@ -44,13 +45,20 @@ module.exports = {
 			backers: data.backers,
 			investment: data.investment,
 			pledged: data.pledged})
-			.then(() => {
-				fs.outputFile(`./projects/${data.user_name}/${data.project_name}.json`,
-					JSON.stringify(data))
-				.then(() => {console.log('Saved!');})
-				.catch(err => {console.log(err);})
+			.then(() => writeSite(data))
+				.then(() => {
+					console.log('Saved!');
+					readSite(data)
+					.then(site => {
+						console.log('AFTER READ ' + site);
+						return site
+					})
 			})
-  },
+				.catch(err => {
+					console.log('READ SITE ERROR LOOK AT me!!!!!!!!!');
+					console.log(err);
+				})
+	},
 
 	Invest(data) { //{ user_id, project_name, }
 		console.log('Data = ', data);
@@ -91,4 +99,32 @@ function saltHashPassword ({password, salt = randomString()}) {
 
 function randomString(){
 	return crypto.randomBytes(4).toString('hex')
+}
+
+function writeSite(data){
+	var code =
+	`    <section id="showcase" style="height:30vh; color:#f6f6f6; background:blue">
+	        <div class="container" style="width:50%; border:solid; border-width:10px; border-radius:0px; border-color:#f6f6f6; background-color: rgba(81, 81, 81, 0.43)">
+	            <h1>${data.project_name}</h1>
+	        </div>
+	    </section>
+
+	    <div class="container">
+	        <h2 style="text-align:center">About</h2>
+	        <p style="line-height:2">${data.project_info}</p>
+	    </div>`;
+			return fs.outputJson(`./projects/${data.user_name}/${data.project_name}.json`,
+				{html: code})
+}
+
+function readSite(data){
+	console.log('IN READ_SITE!!!!!!');
+	fs.readJson(`./projects/${data.user_name}/${data.project_name}.json`)
+	.then(site => {
+		console.log('hpoppppppp!!!!!! ASDLASFKSADFDSLGL '+site);
+		return site;
+	})
+	.catch(err => {
+  console.error(err)
+	})
 }
