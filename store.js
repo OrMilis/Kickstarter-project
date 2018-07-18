@@ -33,6 +33,19 @@ module.exports = {
 
 //FIXME: Read back bug
   createProject(data) {
+		var file = `./projects/${data.user_name}/${data.project_name}.json`;
+
+		var code =
+		`    <section id="showcase" style="height:30vh; color:#f6f6f6; background:blue">
+						<div class="container" style="width:50%; border:solid; border-width:10px; border-radius:0px; border-color:#f6f6f6; background-color: rgba(81, 81, 81, 0.43)">
+								<h1>${data.project_name}</h1>
+						</div>
+				</section>
+
+				<div class="container">
+						<h2 style="text-align:center">About</h2>
+						<p style="line-height:2">${data.project_info}</p>
+				</div>`;
 		console.log('Data = ', data);
   	console.log(`Project created: ${data.user_id}, ${data.project_name},
   		${data.start_date}, ${data.end_date}, ${data.backers},
@@ -45,18 +58,12 @@ module.exports = {
 			backers: data.backers,
 			investment: data.investment,
 			pledged: data.pledged})
-			.then(() => writeSite(data))
-				.then(() => {
-					console.log('Saved!');
-					readSite(data)
-					.then(site => {
-						console.log('AFTER READ ' + site);
-						return site
-					})
-			})
-				.catch(err => {
-					console.log('READ SITE ERROR LOOK AT me!!!!!!!!!');
-					console.log(err);
+			.then(() => {writeSite(data)})
+				.then(() => {readSite(data)})
+				.then(site => {
+					site = JSON.parse(site)
+					console.log(site.html);
+					return site;
 				})
 	},
 
