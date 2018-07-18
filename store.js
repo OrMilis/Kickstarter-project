@@ -4,7 +4,9 @@ const knex = require('knex')(require('./knexfile'))
 const fs = require('fs-extra')
 
 module.exports = {
-	saltHashPassword, createUser ({ username, password }) {
+	saltHashPassword,
+
+	createUser ({ username, password }) {
     console.log(`Add user ${username} with password ${password}`)
     const {salt, hash} = saltHashPassword({password});
     return knex('users').insert({salt, encrypted_password:hash, username})
@@ -31,25 +33,7 @@ module.exports = {
       })
   },
 
-//FIXME: Read back bug
   createProject(data) {
-		var file = `./projects/${data.user_name}/${data.project_name}.json`;
-
-		var code =
-		`    <section id="showcase" style="height:30vh; color:#f6f6f6; background:blue">
-						<div class="container" style="width:50%; border:solid; border-width:10px; border-radius:0px; border-color:#f6f6f6; background-color: rgba(81, 81, 81, 0.43)">
-								<h1>${data.project_name}</h1>
-						</div>
-				</section>
-
-				<div class="container">
-						<h2 style="text-align:center">About</h2>
-						<p style="line-height:2">${data.project_info}</p>
-				</div>`;
-		console.log('Data = ', data);
-  	console.log(`Project created: ${data.user_id}, ${data.project_name},
-  		${data.start_date}, ${data.end_date}, ${data.backers},
-  		 ${data.investment}, ${data.pledged}`)
   	return knex('projects').insert({
 			user_id: data.user_id,
 			project_name: data.project_name,
@@ -58,13 +42,21 @@ module.exports = {
 			backers: data.backers,
 			investment: data.investment,
 			pledged: data.pledged})
-			.then(() => {writeSite(data)})
-				.then(() => {readSite(data)})
-				.then(site => {
-					site = JSON.parse(site)
-					console.log(site.html);
-					return site;
+			.then(() => {
+				var {path, site} = generateSiteAndPath(data);
+				return fs.outputJson(path, {html: site})
+				.then(() => {
+					return fs.readJson(path)
+					console.log('AFTER READ! ');
 				})
+				.then(file => {
+					console.log('In createProject ' + file);
+					return file;
+				})
+				.catch(err => {
+					console.error(err)
+				})
+			})
 	},
 
 	Invest(data) { //{ user_id, project_name, }
@@ -108,8 +100,8 @@ function randomString(){
 	return crypto.randomBytes(4).toString('hex')
 }
 
-function writeSite(data){
-	var code =
+function generateSiteAndPath(data){
+	var site =
 	`    <section id="showcase" style="height:30vh; color:#f6f6f6; background:blue">
 	        <div class="container" style="width:50%; border:solid; border-width:10px; border-radius:0px; border-color:#f6f6f6; background-color: rgba(81, 81, 81, 0.43)">
 	            <h1>${data.project_name}</h1>
@@ -120,18 +112,6 @@ function writeSite(data){
 	        <h2 style="text-align:center">About</h2>
 	        <p style="line-height:2">${data.project_info}</p>
 	    </div>`;
-			return fs.outputJson(`./projects/${data.user_name}/${data.project_name}.json`,
-				{html: code})
-}
-
-function readSite(data){
-	console.log('IN READ_SITE!!!!!!');
-	fs.readJson(`./projects/${data.user_name}/${data.project_name}.json`)
-	.then(site => {
-		console.log('hpoppppppp!!!!!! ASDLASFKSADFDSLGL '+site);
-		return site;
-	})
-	.catch(err => {
-  console.error(err)
-	})
+			var path = `./projects/${data.user_name}/${data.project_name}.json`;
+			return {path, site}
 }

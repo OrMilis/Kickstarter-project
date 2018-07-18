@@ -42,13 +42,12 @@ app.post('/createProject', (req, res) => {
       pledged: 0,
       project_info: req.body.project_info
     })
-    .then((site) => {
-      console.log("IN INDEX.JS  " + site);
+    .then(site => {
+      return res.send(site);
     })
 })
 
 app.post('/Invest', (req, res) => {
-  //console.log(req.body.user_id,req.body.project_name,req.body.investment  );
   store.Invest({
       user_id: req.body.user_id,
       project_name: req.body.project_name,

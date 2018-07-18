@@ -53,6 +53,7 @@ CreateProject.addEventListener('submit', (e) => {
   })
   .then(data => {
     data = JSON.parse(data);
+    console.log(data);
     document.querySelector('.Body').innerHTML = data.html;
   })
   .catch(error => {
