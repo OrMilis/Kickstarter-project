@@ -29,6 +29,7 @@ Login.addEventListener('submit', (e) => {
     logedInUser.permissions = data.permissions;
     console.log(data);
     console.log(logedInUser);
+    document.querySelector('.Body').innerHTML = "<h1>Login Sucssesful!</h1>";
   })
   .catch(error => {
     console.log('Error is', error);
