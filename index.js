@@ -31,17 +31,7 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/createProject', (req, res) => {
-  store.createProject({
-      user_name: req.body.user_name,
-      user_id: req.body.user_id,
-      project_name: req.body.project_name,
-      start_date: req.body.start_date,
-      end_date: req.body.end_date,
-      backers: 0,
-      investment: req.body.investment,
-      pledged: 0,
-      project_info: req.body.project_info
-    })
+  store.createProject(req.body)
     .then(site => {
       return res.send(site);
     })
@@ -65,6 +55,15 @@ app.post('/Invest', (req, res) => {
 //TODO: updateProject
 
 //TODO: getProjectSite
+app.post('/project', (req, res) =>{
+  store.retrieveProjectSite({
+    user_name: req.body.user_name,
+    project_name: req.body.project_name
+  })
+  .then(site => {
+    return res.send(site);
+  })
+})
 
 app.listen(7555, () => {
   console.log('Server running on http://172.40.0.116:7555')

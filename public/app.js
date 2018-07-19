@@ -46,15 +46,17 @@ CreateProject.addEventListener('submit', (e) => {
   const end_date = CreateProject.querySelector('.end_date').value
   const investment = CreateProject.querySelector('.investment').value
   const project_info = CreateProject.querySelector('.project_info').value
-  post('/CreateProject', {user_name, user_id, project_name, start_date,end_date, investment, project_info})
+  const project_video = CreateProject.querySelector('.project_video').value
+  const project_image = CreateProject.querySelector('.project_image').value
+  post('/CreateProject', {user_name, user_id, project_name, start_date,end_date, investment,
+     project_info, project_video, project_image})
   .then(response => {
     if(response.ok)
     return response.text();
   })
   .then(data => {
-    data = JSON.parse(data);
     console.log(data);
-    document.querySelector('.Body').innerHTML = data.html;
+    document.querySelector('.Body').innerHTML = data;
   })
   .catch(error => {
     console.log('Error is', error);
@@ -68,6 +70,26 @@ Invest.addEventListener('submit', (e) => {
   const project_name = Invest.querySelector('.project_name').value
   const investment = Invest.querySelector('.investment').value
   post('/Invest', {user_id, project_name, investment})
+})
+
+const Project = document.querySelector('.GetProject')
+Project.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const user_name = Project.querySelector('.username').value
+  const project_name = Project.querySelector('.project_name').value
+  console.log('name: ' + user_name + ' pro: ' + project_name);
+  post('/project', {user_name, project_name})
+  .then(response => {
+    if(response.ok)
+    return response.text();
+  })
+  .then(data => {
+    console.log(data);
+    document.querySelector('.Body').innerHTML = data;
+  })
+  .catch(error => {
+    console.log('Error is', error);
+  })
 })
 
 function post (path, data) {

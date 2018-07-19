@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <title>Node database tutorial</title>
 </head>
 <body>
@@ -25,6 +26,8 @@
     <input type="datetime-local" class="end_date" placeholder="end_date">
     <input type="text" class="investment" placeholder="investment">
     <input type="text" class="project_info" placeholder="project_info">
+    <input type="text" class="project_video" placeholder="project_video">
+    <input type="text" class="project_image" placeholder="project_image">
     <input type="submit" value="Create">
   </form>
 <form class = "Invest">
@@ -32,6 +35,12 @@
   <input type="text" class="project_name" placeholder="project_name">
   <input type="text" class="investment" placeholder="investment">
   <input type="submit" value="Invest">
+</form>
+<form class = "GetProject">
+  <h1>Get Project</h1>
+  <input type="text" class="username" placeholder="username">
+  <input type="text" class="project_name" placeholder="project_name">
+  <input type="submit" value="GetProject">
 </form>
 <div class = "Body"></div>
   <script src="/app.js"></script>
