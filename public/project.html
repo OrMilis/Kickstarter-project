@@ -3,32 +3,81 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Machu Picchu</title>
+    <title>kickstarter Ran & OR</title></title>
 </head>
 <body>
-    <section id="showcase" style="height:30vh; color:#f6f6f6; background: url('Images/Machu Picchu-llama.jpg') no-repeat center">
-        <div class="container" style="width:50%; border:solid; border-width:10px; border-radius:0px; border-color:#f6f6f6; background-color: rgba(81, 81, 81, 0.43)">
-            <h1>Machu Picchu</h1>
-        </div>
-    </section>
-
-    <div class="container">
-        <h2 style="text-align:center">About</h2>
-        <p style="line-height:2">
-            Machu Picchu is the site of an ancient Inca city, high in the Andes of Peru. Located at 2,430m (8,000 ft), this UNESCO World Heritage site is often referred to as "The Lost City of the Incas". It's one of the most familiar symbols of the Incan Empire and also one of the most famous and spectacular sets of ruins in the world. A visit to Peru would not be complete without seeing it, but this can be very expensive and crowded.
+    <div class="profile_title container">
+      <span class="profile box">
+          <img src="./static_web/profile_pic.png" alt="profile pic" width="75" height="75"> <br />
+          <a>BY "PROFILE_NAME"</a> <br />
+          <a href="">NUM_OF_PROJECTS</a>
+      </span>
+      <span class = "title box">
+        <h1>
+          THE_PROJECT_NAME
+        </h1>
+        <p>
+          SHORT_ABSTRACT
         </p>
+      </span>
     </div>
-
-    <div class="container">
-        <table>
-            <tr>
-                <th>
-                    <img src="Images/Machu Picchu.jpg" width="30%" />
-                    <img src="Images/Machu Picchu-1.jpg" width="30%" />
-                    <img src="Images/Machu Picchu-2.jpg" width="30%" />
-                </th>
-            </tr>
-        </table>
-    </div>
+  <div class="video_statistics container">
+    <span class="video box" style="width:50%">
+      <video width="100%" controls>
+        <source src="./static_web/video.mp4" type="video/mp4">
+      </video>
+    </span>
+    <span class="statistics box">
+      <div id="myProgress">
+        <div id="myBar"></div>
+      </div>
+      <button onclick="move()">Click Me</button>
+      <div>
+        <p>
+          <a>AMOUNT</a> <br />
+          <a>pledged of AMOUNT2 goal</a>
+        </p>
+      </div>
+      <div>
+        <p>
+          <a>BACKERS</a><br />
+          <a>backers</a>
+        </p>
+      </div>
+      <div>
+        <p>
+          <a>DAYS</a> <br/>
+          <a>days to go</a>
+        </p>
+      </div>
+    </span>
+  </div>
+  <div class="info_pic container"
+  <span class="info box" >
+    <h3>
+      About
+    </h3>
+    <p>
+      here will be all the information about the project
+    </p>
+  </span>
+  <span class="picture box" >
+    <img src="./static_web/project_picture.jpg" alt="projcet pic" width="400" height="400">
+  </span>
 </body>
+<script>
+function move() {
+    var elem = document.getElementById("myBar");
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+        } else {
+            width++;
+            elem.style.width = width + '%';
+        }
+    }
+}
+</script>
 </html>

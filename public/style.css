@@ -17,15 +17,26 @@ body {
 }
 
 .box {
-    width: 90%;
+    margin: 1%;
     align-items: center;
-    display: flex;
     overflow: hidden;
-}
+    float:left;
+    width:33%;
+  }
 
 p {
     line-height: 2;
     font-size: 16px;
+}
+
+#myProgress {
+    width: 100%;
+    background-color: #8f8f8f;
+}
+#myBar {
+    width: 1%;
+    height: 5.2px;
+    background-color: #2fb918;
 }
 /*Global*/
 
