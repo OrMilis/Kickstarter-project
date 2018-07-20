@@ -1,114 +1,155 @@
 body {
-    font-family: Josefin Sans;
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 1.5;
-    padding: 0;
-    margin: 0;
-    background-color: #f6f6f6;
+  font-family: Josefin Sans;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.5;
+  padding: 0;
+  margin: 0;
+  background-color: #f6f6f6;
 }
 
 /*Global*/
+
 .container {
-    width: 90%;
-    margin: auto;
-    align-items: center;
-    overflow: hidden;
+  padding: 1.5% 3% 1.5% 3%;
+  display: flex;
+  margin-bottom: 0%;
+  border-bottom: 1px solid #d4d2d2;
 }
 
 .box {
-    margin: 1%;
-    align-items: center;
-    overflow: hidden;
-    float:left;
-    width:33%;
-  }
+  padding: 1.5%;
+  align-items: center;
+  float: left;
+  width: 33%;
+}
+
+.profile {
+  width: 15%;
+  align-items: center;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.profile img {
+  width: 25%;
+  margin-bottom: 5%;
+}
+
+.abstract {
+    width: 70%;
+}
+
+.video {
+  width: 65%;
+}
+
+.statistics{
+  width: 35%;
+  padding: 0% 2% 0% 2%;
+}
+
+.PledgeForm {
+  height: auto;
+}
+
+.Pledge input{
+  width: 100%;
+}
+
+.Pledge input[type=text] {
+  padding: 3% 5% 3% 3%;
+  border: 2px solid #d5d5d5;
+  font-family: Josefin Sans;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin: 2.5% 0% 3% 0%;
+}
+
+.Pledge input[type=text]:focus {
+  border: 2px solid #535353;
+  outline: none;
+}
+
+.Pledge input[type=submit] {
+  background-color: #329d60;
+  border: none;
+  color: #f6f6f6;
+  padding: 3% 20% 3% 20%;
+  font-family: Josefin Sans;
+  font-size: 16px;
+}
+
+.showcase {
+  line-height: 0;
+  text-align: left;
+  font-family: Josefin Sans;
+  font-weight: 300;
+  padding: 3% 3% 3% 3%;
+  margin: 1.5% 0% 0% 0%;
+  display: flex;
+  border-bottom: 1px solid #d4d2d2;
+  border-top: 1px solid #d4d2d2;
+}
+
+.dataNums{
+  font-size: 20px;
+  color: #329d60;
+}
+
+.info {
+  padding: 1.5% 3% 1.5% 3%;
+}
 
 p {
-    line-height: 2;
-    font-size: 16px;
+  line-height: 1.5;
+  font-size: 16px;
 }
 
 #myProgress {
-    width: 100%;
-    background-color: #8f8f8f;
+  width: 100%;
+  background-color: #d7d7d7;
+  margin-bottom: 5%;
 }
+
 #myBar {
-    width: 1%;
-    height: 5.2px;
-    background-color: #2fb918;
+  width: 50%;
+  height: 4px;
+  background-color: #329d60;
 }
+
 /*Global*/
 
-/*navBar*/
-#navBar nav {
-    float: none;
-}
-
-#navBar li {
-    display: inline;
-    margin-left: 5.5%;
-}
-
-#navBar a {
-    text-transform: uppercase;
-    font-family: Josefin Sans;
-    font-weight: 700;
-    text-decoration: none;
-    color: black;
-}
-/*navBar*/
-
-/*showcase*/
-#showcase {
-    background: url(Images/Polygon.jpg) no-repeat center;
-    background-size: cover;
-    background-attachment: local;
-    padding-top: 2.5%;
-    text-align: center;
-    font-family: Josefin Sans;
-    font-size: 175%;
-    font-weight: 300;
-    color: #5180b9;
-    box-shadow: inset rgba(146, 146, 146, 0.50) 0 -6px 20px 0px;
-    height: 45vh;
-    display: flex;
-    background-size: cover;
-}
-
-#showcase img {
-    width: inherit;
-    max-width: 350px;
-    height: auto;
-    margin-bottom: -3%;
-    pointer-events: none;
-}
-/*showcase*/
-
 /*Fonts*/
+
 @font-face {
-    font-family: Josefin Sans;
-    src: url(/Fonts/JOSEFINSANS-THIN_0.TTF);
-    font-weight:100;
+  font-family: Josefin Sans;
+  src: url(/Fonts/JOSEFINSANS-THIN_0.TTF);
+  font-weight: 100;
 }
+
 @font-face {
-    font-family: Josefin Sans;
-    src: url(/Fonts/JOSEFINSANS-LIGHT_0.TTF);
-    font-weight: 300;
+  font-family: Josefin Sans;
+  src: url(/Fonts/JOSEFINSANS-LIGHT_0.TTF);
+  font-weight: 300;
 }
+
 @font-face {
-    font-family: Josefin Sans;
-    src: url(/Fonts/JOSEFINSANS-REGULAR_0.TTF);
-    font-weight: 400;
+  font-family: Josefin Sans;
+  src: url(/Fonts/JOSEFINSANS-REGULAR_0.TTF);
+  font-weight: 400;
 }
+
 @font-face {
-    font-family: Josefin Sans;
-    src: url(/Fonts/JOSEFINSANS-SEMIBOLD_0.TTF);
-    font-weight: 600;
+  font-family: Josefin Sans;
+  src: url(/Fonts/JOSEFINSANS-SEMIBOLD_0.TTF);
+  font-weight: 600;
 }
+
 @font-face {
-    font-family: Josefin Sans;
-    src: url(/Fonts/JOSEFINSANS-BOLD_0.TTF);
-    font-weight: 700;
+  font-family: Josefin Sans;
+  src: url(/Fonts/JOSEFINSANS-BOLD_0.TTF);
+  font-weight: 700;
 }
+
 /*Fonts*/

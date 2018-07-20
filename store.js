@@ -45,7 +45,9 @@ module.exports = {
           investment: data.investment,
           pledged: 0
         })
-        .then(() => {return saveAndReadSite(data);})
+        .then(() => {
+          return saveAndReadSite(data);
+        })
     },
 
     Invest(data) { //{ user_id, project_name, }
@@ -127,15 +129,17 @@ module.exports = {
   }
 
   function getProjectSite(path) {
-		return fs.readJson(path)
-		.then(data => {
-			return generateSiteFile(data)
-		});
+    return fs
+      .readJson(path)
+      .then(data => {
+        return generateSiteFile(data)
+      });
   }
 
   function saveAndReadSite(data) {
     var path = generateSitePath(data);
-    return fs.outputJson(path, data)
+    return fs
+      .outputJson(path, data)
       .then(() => {
         return getProjectSite(path)
         console.log('AFTER READ! ');
@@ -148,79 +152,86 @@ module.exports = {
       })
     }
 
-    function calculateDays(start_date, end_date){
-      start_date = Date.parse(start_date);
-      end_date = Date.parse(end_date);
+  function calculateDays(start_date, end_date) {
+    start_date = Date.parse(start_date);
+    end_date = Date.parse(end_date);
 
-      return (end_date-start_date) / (1000*60*60*24);
-    }
+    return (end_date - start_date) / (1000 * 60 * 60 * 24);
+  }
 
-		function generateSiteFile(data) {
-      return knex('projects').where({user_id: data.user_id}).count()
+  function generateSiteFile(data) {
+    return knex('projects')
+      .where({user_id: data.user_id})
+      .count()
       .then(count => {
-        return knex('projects').where({project_name: data.project_name})
-        .then(([project]) => {
-          var remaining_days = calculateDays(project.start_date, project.end_date)
-          var site =
-          `<div class="profile_title container">
-            <span class="profile box">
-                <img src="./static_web/profile_pic.png" alt="profile pic" width="75" height="75"> <br />
-                <a>BY ${data.user_name}</a> <br />
-                <a href="">${count[0]['count(*)']} created</a>
-            </span>
-            <span class = "title box">
-              <h1>
-                ${data.project_name}
-              </h1>
-              <p>
-                SHORT_ABSTRACT
-              </p>
-            </span>
-          </div>
-        <div class="video_statistics container">
-          <span class="video box" style="width:50%">
-            <video width="100%" controls>
-              <source src="${data.project_video}" type="video/mp4">
-            </video>
-          </span>
-          <span class="statistics box">
-            <div id="myProgress">
-              <div id="myBar" style="width:${(project.pledged/project.investment) * 100}%"></div>
+        return knex('projects')
+          .where({project_name: data.project_name})
+          .then(([project]) => {
+            var remaining_days = calculateDays(project.start_date, project.end_date)
+            var site =
+            `<div class="container">
+              <span class="profile box">
+                    <img src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" alt="profile pic" width="60%"> <br />
+                    <a>By ${data.user_name}</a> <br />
+                    <a href="">${count[0]['count(*)']}</a>
+                </span>
+              <span class="abstract">
+                  <h1>
+                    ${data.project_name}
+                  </h1>
+                  <p>
+                    SHORT_ABSTRACT
+                  </p>
+                </span>
             </div>
-            <div>
-              <p>
-                <a>${project.pledged}</a> <br />
-                <a>pledged of ${project.investment} goal</a>
-              </p>
+            <div class="video_statistics showcase ">
+              <span class="video">
+                <video width="100%" controls>
+                  <source src="${data.project_video}" type="video/mp4">
+                </video>
+              </span>
+              <span class="statistics">
+                <div id="myProgress">
+                  <div id="myBar" style="width:${ (project.pledged / project.investment) * 100}%"></div>
+                </div>
+                <div>
+                  <p>
+                    <a class="dataNums">${project.pledged}</a> <br />
+                    <a>pledged of ${project.investment} goal</a>
+                  </p>
+                </div>
+                <div>
+                  <p>
+                    <a class="dataNums">${project.backers}</a><br />
+                    <a>backers</a>
+                  </p>
+                </div>
+                <div>
+                  <p>
+                    <a class="dataNums">${remaining_days}</a> <br/>
+                    <a>days to go</a>
+                  </p>
+                </div>
+                <div class="PledgeForm">
+                  <form class="Pledge">
+                    <input type="text" class="amount" placeholder="Pledge any amount"> <br />
+                    <input type="submit" value="Back this project">
+                  </form>
+                </div>
+              </span>
             </div>
-            <div>
+            <div class="info">
+              <h2>
+                About
+              </h2>
               <p>
-                <a>${project.backers}</a><br />
-                <a>backers</a>
+                ${data.project_info}
               </p>
-            </div>
-            <div>
-              <p>
-                <a>${remaining_days}</a> <br/>
-                <a>days to go</a>
-              </p>
-            </div>
-          </span>
-        </div>
-        <div class="info_pic container"
-        <span class="info box" >
-          <h3>
-            About
-          </h3>
-          <p>
-            ${data.project_info}
-          </p>
-        </span>
-        <span class="picture box" >
-          <img src="${data.project_image}" alt="projcet pic" width="400" height="400">
-        </span>
-      </body>`
-          return site;
-        })
+              <span class="picture">
+                <img src="${data.project_image}" alt="projcet pic" width="400" height="400">
+              </span>
+            </div>`
+            return site;
+          })
       })
-	  }
+  }

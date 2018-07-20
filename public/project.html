@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>kickstarter Ran & OR</title></title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>kickstarter Ran & OR</title>
+  </title>
 </head>
+
 <body>
-    <div class="profile_title container">
-      <span class="profile box">
-          <img src="./static_web/profile_pic.png" alt="profile pic" width="75" height="75"> <br />
-          <a>BY "PROFILE_NAME"</a> <br />
-          <a href="">NUM_OF_PROJECTS</a>
+  <div class="container">
+    <span class="profile box">
+          <img src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" alt="profile pic" width="60%"> <br />
+          <a>By Lolo Bagget</a> <br />
+          <a href="">00 created</a>
       </span>
-      <span class = "title box">
+    <span class="abstract">
         <h1>
           THE_PROJECT_NAME
         </h1>
@@ -20,64 +23,54 @@
           SHORT_ABSTRACT
         </p>
       </span>
-    </div>
-  <div class="video_statistics container">
-    <span class="video box" style="width:50%">
+  </div>
+  <div class="video_statistics showcase ">
+    <span class="video">
       <video width="100%" controls>
-        <source src="./static_web/video.mp4" type="video/mp4">
+        <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
       </video>
     </span>
-    <span class="statistics box">
+    <span class="statistics">
       <div id="myProgress">
         <div id="myBar"></div>
       </div>
-      <button onclick="move()">Click Me</button>
       <div>
         <p>
-          <a>AMOUNT</a> <br />
+          <a class="dataNums">AMOUNT</a> <br />
           <a>pledged of AMOUNT2 goal</a>
         </p>
       </div>
       <div>
         <p>
-          <a>BACKERS</a><br />
+          <a class="dataNums">BACKERS</a><br />
           <a>backers</a>
         </p>
       </div>
       <div>
         <p>
-          <a>DAYS</a> <br/>
+          <a class="dataNums">DAYS</a> <br/>
           <a>days to go</a>
         </p>
       </div>
+      <div class="PledgeForm">
+        <form class="Pledge">
+          <input type="text" class="amount" placeholder="Pledge any amount"> <br />
+          <input type="submit" value="Back this project">
+        </form>
+      </div>
     </span>
   </div>
-  <div class="info_pic container"
-  <span class="info box" >
-    <h3>
+  <div class="info">
+    <h2>
       About
-    </h3>
+    </h2>
     <p>
       here will be all the information about the project
     </p>
-  </span>
-  <span class="picture box" >
-    <img src="./static_web/project_picture.jpg" alt="projcet pic" width="400" height="400">
-  </span>
+    <span class="picture">
+      <img src="./static_web/project_picture.jpg" alt="projcet pic" width="400" height="400">
+    </span>
+  </div>
 </body>
-<script>
-function move() {
-    var elem = document.getElementById("myBar");
-    var width = 1;
-    var id = setInterval(frame, 10);
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-            width++;
-            elem.style.width = width + '%';
-        }
-    }
-}
-</script>
+
 </html>
