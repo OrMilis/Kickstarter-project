@@ -86,6 +86,16 @@ Project.addEventListener('submit', (e) => {
   .then(data => {
     console.log(data);
     document.querySelector('.Body').innerHTML = data;
+    var Pledged = document.querySelector('.Pledge');
+    Pledged.addEventListener('submit', (e) => {
+      e.preventDefault()
+      if(logedInUser.id != -1){
+        const investment = document.querySelector('.amount').value;
+        const user_id = logedInUser.id;
+        console.log({user_id,project_name,investment});
+        post('/Invest', {user_id, project_name, investment})
+      }
+    })
   })
   .catch(error => {
     console.log('Error is', error);

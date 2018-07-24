@@ -3,7 +3,7 @@ module.exports = {
   version:'5.7',
   connection: {
     host: 'localhost',
-    user: 'OrMilis-PC',
+    user: 'root',
     password: '1234',
     database: 'kickstarter'
   }
