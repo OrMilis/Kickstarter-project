@@ -2,6 +2,7 @@
 const crypto = require('crypto')
 const knex = require('knex')(require('./knexfile'))
 const fs = require('fs-extra')
+const template = require('es6-template-strings')
 
 module.exports = {
   saltHashPassword,
@@ -168,70 +169,12 @@ module.exports = {
           .where({project_name: data.project_name})
           .then(([project]) => {
             var remaining_days = calculateDays(project.start_date, project.end_date)
-            var site =
-            `<div class="container">
-              <span class="profile box">
-                    <img src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" alt="profile pic" width="60%"> <br />
-                    <a>By ${data.user_name}</a> <br />
-                    <a href="">${count[0]['count(*)']}</a>
-                </span>
-              <span class="abstract">
-                  <h1>
-                    ${data.project_name}
-                  </h1>
-                  <p>
-                    SHORT_ABSTRACT
-                  </p>
-                </span>
-            </div>
-            <div class="video_statistics showcase ">
-              <span class="video">
-                <video width="100%" controls>
-                  <source src="${data.project_video}" type="video/mp4">
-                </video>
-              </span>
-              <span class="statistics">
-                <div id="myProgress">
-                  <div id="myBar" style="width:${ (project.pledged / project.investment) * 100}%"></div>
-                </div>
-                <div>
-                  <p>
-                    <a class="dataNums">${project.pledged}</a> <br />
-                    <a>pledged of ${project.investment} goal</a>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    <a class="dataNums">${project.backers}</a><br />
-                    <a>backers</a>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    <a class="dataNums">${remaining_days}</a> <br/>
-                    <a>days to go</a>
-                  </p>
-                </div>
-                <div class="PledgeForm">
-                  <form class="Pledge">
-                    <input type="text" class="amount" placeholder="Pledge any amount"> <br />
-                    <input type="submit" value="Back this project">
-                  </form>
-                </div>
-              </span>
-            </div>
-            <div class="info">
-              <h2>
-                About
-              </h2>
-              <p>
-                ${data.project_info}
-              </p>
-              <span class="picture">
-                <img src="${data.project_image}" alt="projcet pic" width="400" height="400">
-              </span>
-            </div>`
-            return site;
+            var path = './Templates/ProjectPageTamplate.txt';
+            return fs.readFile(path)
+            .then(site => {
+              site = site.toString();
+              return template(site, {data, count, project, remaining_days});
+            })
           })
       })
   }
