@@ -57,21 +57,34 @@ module.exports = {
   	amount of: ${data.investment}`)
       return knex('projects')
         .where({project_name: data.project_name})
-        .then(([project]) => {
-          console.log(project);
-          return knex('projects')
-            .where({project_name: data.project_name})
-            .update({
-              backers: ++project.backers,
-              pledged: project.pledged += data.investment
+      .then(([project]) => {
+        console.log(project);
+        var numOfBackers ;
+        return knex('projectInvest').where({user_id:data.user_id,project_id: project.id})
+        .then(([investment]) => {
+          if(investment) {
+            numOfBackers = project.backers;
+            return knex('projectInvest').update({
+                amount: investment.amount += parseInt(data.investment)
             })
-            .then(() => {
+          } else {
+              numOfBackers = ++project.backers;
               return knex('projectInvest').insert({
                 user_id: data.user_id,
                 project_id: project.id,
                 amount: parseInt(data.investment)
-              });
-            })
+              })
+            }
+          })
+          .then(() => {
+            console.log('Project: ' + project.pledged + ' Data: ' + data.investment);
+            return knex('projects')
+              .where({project_name: data.project_name})
+              .update({
+                backers: numOfBackers,
+                pledged: project.pledged += parseInt(data.investment)
+              })
+          })
         })
     },
 
