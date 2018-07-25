@@ -118,6 +118,48 @@ p {
   background-color: #329d60;
 }
 
+/*navBar*/
+.navBar {
+  height: 10%;
+}
+
+.navBar nav {
+    float: none;
+}
+
+.navBar li {
+    display: inline;
+    margin-left: 5.5%;
+}
+
+.navBar a {
+    text-transform: uppercase;
+    font-family: Josefin Sans;
+    font-weight: 700;
+    text-decoration: none;
+    color: black;
+}
+/*navBar*/
+
+.homeStatistics {
+  height: 20vh;
+  align-items: center;
+  border: 1px solid #163b00;
+  display: flex;
+}
+
+.statisticsBox {
+  width: 25%;
+  align-items: center;
+  border-right: 2px solid #d0d0d0;
+  height: inherit;
+  padding: 2%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 /*Global*/
 
 /*Fonts*/
