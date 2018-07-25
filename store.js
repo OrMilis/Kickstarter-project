@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const knex = require('knex')(require('./knexfile'))
 const fs = require('fs-extra')
 const template = require('es6-template-strings')
+const values = ['BACKER','CREATOR','ADMIN'];
 
 module.exports = {
   saltHashPassword,
@@ -47,7 +48,12 @@ module.exports = {
           pledged: 0
         })
         .then(() => {
-          return saveAndReadSite(data);
+          return knex('users').where({id:data.user_id}).update({
+            permissions: values[1]
+          })
+          .then(() => {
+            return saveAndReadSite(data);
+          })
         })
     },
 
@@ -90,12 +96,18 @@ module.exports = {
 
     //TODO: findAllProjects
     findAllProjects() {
-      return knex('projects').select();
+      return knex('projects').select()
+      .then(([projects]) => {
+        return projects;
+      });
     },
 
     //TODO: findAllUsers
     findAllUsers() {
       return knex('users').select()
+      .then(([users]) => {
+        return users;
+      })
     },
 
     //TODO: removeProject

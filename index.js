@@ -47,9 +47,26 @@ app.post('/Invest', (req, res) => {
 })
 
 //TODO: findAllProjects
-
+app.get('/findAllProjects',(req,res) => {
+  store.findAllProjects()
+  .then((projects) =>{
+    if(projects)
+      res.send(projects)
+    else {
+      res.sendStatus(401)
+    }
+  })
+})
 //TODO: findAllUsers
-
+app.get('/findAllUsers',(req,res) => {
+  store.findAllUsers()
+  .then((users) => {
+    if(users)
+      res.send(users)
+    else
+        res.sendStatus(401);
+   })
+})
 //TODO: removeProject
 
 //TODO: updateProject
