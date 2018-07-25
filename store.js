@@ -4,6 +4,9 @@ const knex = require('knex')(require('./knexfile'))
 const fs = require('fs-extra')
 const template = require('es6-template-strings')
 
+const projectPagetemplatePath = './Templates/ProjectPageTamplate.txt';
+const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
+
 module.exports = {
   saltHashPassword,
 
@@ -91,7 +94,11 @@ module.exports = {
 
     //TODO: findAllProjects
     findAllProjects() {
-      return knex('projects').select();
+      return knex('projects').select()
+      .then(() => {
+        generateHomePage();
+        return 0;
+      });
     },
 
     //TODO: findAllUsers
@@ -183,13 +190,30 @@ module.exports = {
           .where({project_name: data.project_name})
           .then(([project]) => {
             var remaining_days = calculateDays(project.start_date, project.end_date)
-            var path = './Templates/ProjectPageTamplate.txt';
             return fs
-              .readFile(path)
+              .readFile(projectPagetemplatePath)
               .then(site => {
                 site = site.toString();
                 return template(site, {data, count, project, remaining_days});
               })
           })
       })
+  }
+
+function generateHomePage(){
+  var allBlocks = '';
+  return knex('projects').select()
+  .then((projects) => {
+    projects.forEach((project) => {
+      allBlocks += generateProjectBlock(project);
+    })
+  })
+}
+
+  function generateProjectBlock(project){
+    return fs.readFile(projectBlockTemplatePath)
+    .then(block => {
+      block = block.toString();
+      return template(block, {project});
+    })
   }

@@ -47,6 +47,10 @@ app.post('/Invest', (req, res) => {
 })
 
 //TODO: findAllProjects
+app.get('/findAllProjects', (req, res) => {
+  store.findAllProjects()
+  .then(() => res.sendStatus(200))
+})
 
 //TODO: findAllUsers
 
