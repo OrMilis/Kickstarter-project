@@ -1,0 +1,17 @@
+<div class="grid-item">
+  <div class="project-image">
+    <img src="https://img-9gag-fun.9cache.com/photo/am7yv72_460swp.webp" /><br /><br />
+  </div>
+  <div class="project-block-info">
+    <a class="bold">PROJECT_NAME</a><br />
+    <a style="font-size:14px;">CREATOR_NAME</a>
+  </div>
+  <div class="project-block-statistics">
+    <div id="myProgress">
+      <div id="myBar" style=""></div>
+    </div>
+    <a>$PLEDEGE_AMOUNT Pledged</a><br />
+    <a>PRECENTAGE% Funded</a><br />
+    <a>TIME_REMAINING Time to go</a><br />
+  </div>
+</div>
