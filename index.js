@@ -47,13 +47,34 @@ app.post('/Invest', (req, res) => {
 })
 
 //TODO: findAllProjects
+<<<<<<< HEAD
 app.get('/findAllProjects', (req, res) => {
   store.findAllProjects()
   .then(() => res.sendStatus(200))
 })
 
+=======
+app.get('/findAllProjects',(req,res) => {
+  store.findAllProjects()
+  .then((projects) =>{
+    if(projects)
+      res.send(projects)
+    else {
+      res.sendStatus(401)
+    }
+  })
+})
+>>>>>>> f927eaca802e217e9fcebb3e26293a7efd95e7b8
 //TODO: findAllUsers
-
+app.get('/findAllUsers',(req,res) => {
+  store.findAllUsers()
+  .then((users) => {
+    if(users)
+      res.send(users)
+    else
+        res.sendStatus(401);
+   })
+})
 //TODO: removeProject
 
 //TODO: updateProject

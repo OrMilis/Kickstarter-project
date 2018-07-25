@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const knex = require('knex')(require('./knexfile'))
 const fs = require('fs-extra')
 const template = require('es6-template-strings')
+const values = ['BACKER','CREATOR','ADMIN'];
 
 const projectPagetemplatePath = './Templates/ProjectPageTamplate.txt';
 const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
@@ -50,7 +51,12 @@ module.exports = {
           pledged: 0
         })
         .then(() => {
-          return saveAndReadSite(data);
+          return knex('users').where({id:data.user_id}).update({
+            permissions: values[1]
+          })
+          .then(() => {
+            return saveAndReadSite(data);
+          })
         })
     },
 
@@ -95,15 +101,23 @@ module.exports = {
     //TODO: findAllProjects
     findAllProjects() {
       return knex('projects').select()
+<<<<<<< HEAD
       .then(() => {
         generateHomePage();
         return 0;
+=======
+      .then(([projects]) => {
+        return projects;
+>>>>>>> f927eaca802e217e9fcebb3e26293a7efd95e7b8
       });
     },
 
     //TODO: findAllUsers
     findAllUsers() {
       return knex('users').select()
+      .then(([users]) => {
+        return users;
+      })
     },
 
     //TODO: removeProject
