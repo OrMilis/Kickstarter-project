@@ -8,6 +8,13 @@ const app = express()
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
+app.get('/homePage', (req, res) => {
+  store.getHomePage()
+  .then(site => {
+    res.send(site);
+  })
+})
+
 app.post('/createUser', (req, res) => {
   store
     .createUser({
@@ -47,13 +54,6 @@ app.post('/Invest', (req, res) => {
 })
 
 //TODO: findAllProjects
-<<<<<<< HEAD
-app.get('/findAllProjects', (req, res) => {
-  store.findAllProjects()
-  .then(() => res.sendStatus(200))
-})
-
-=======
 app.get('/findAllProjects',(req,res) => {
   store.findAllProjects()
   .then((projects) =>{
@@ -64,7 +64,6 @@ app.get('/findAllProjects',(req,res) => {
     }
   })
 })
->>>>>>> f927eaca802e217e9fcebb3e26293a7efd95e7b8
 //TODO: findAllUsers
 app.get('/findAllUsers',(req,res) => {
   store.findAllUsers()

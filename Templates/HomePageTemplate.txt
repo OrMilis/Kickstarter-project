@@ -1,0 +1,25 @@
+<div class="homeStatistics">
+  <table>
+    <tr>
+      <td class="statisticsBox">
+        <a>TODAY_DATE</a> <br/>
+        <a class="bold">Nice sentence</a>
+      </td>
+      <td class="statisticsBox">
+        <a>Total Backers</a> <br/>
+        <a class="bold">TOTAL_BACKERS</a>
+      </td>
+      <td class="statisticsBox">
+        <a>Funded Projects</a> <br/>
+        <a class="bold">FUNDED_PROJECTS</a>
+      </td>
+      <td class="statisticsBox">
+        <a>Live Projects</a> <br/>
+        <a class="bold">LIVE_PROJECTS</a>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="projectShowcase grid-container">
+  ${allBlocks}
+</div>

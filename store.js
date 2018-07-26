@@ -7,9 +7,14 @@ const values = ['BACKER','CREATOR','ADMIN'];
 
 const projectPagetemplatePath = './Templates/ProjectPageTamplate.txt';
 const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
+const homePageTemplatePath = './Templates/homePageTemplate.txt';
 
 module.exports = {
   saltHashPassword,
+
+  getHomePage() {
+    return generateHomePage();
+  },
 
   createUser({username, password}) {
     console.log(`Add user ${username} with password ${password}`)
@@ -101,14 +106,8 @@ module.exports = {
     //TODO: findAllProjects
     findAllProjects() {
       return knex('projects').select()
-<<<<<<< HEAD
-      .then(() => {
-        generateHomePage();
-        return 0;
-=======
       .then(([projects]) => {
         return projects;
->>>>>>> f927eaca802e217e9fcebb3e26293a7efd95e7b8
       });
     },
 
@@ -219,7 +218,18 @@ function generateHomePage(){
   return knex('projects').select()
   .then((projects) => {
     projects.forEach((project) => {
-      allBlocks += generateProjectBlock(project);
+      var temp = generateProjectBlock(project);
+      console.log(temp);
+      allBlocks += temp;
+    })
+    console.log("OUT: " + allBlocks);
+  })
+  .then(() => {
+    return fs.readFile(homePageTemplatePath)
+    .then(homepage => {
+      homepage = homepage.toString();
+      homepage = template(homepage, {allBlocks})
+      return homepage;
     })
   })
 }
