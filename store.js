@@ -3,7 +3,7 @@ const crypto = require('crypto')
 const knex = require('knex')(require('./knexfile'))
 const fs = require('fs-extra')
 const template = require('es6-template-strings')
-const values = ['BACKER','CREATOR','ADMIN'];
+const values = ['BACKER', 'CREATOR', 'ADMIN'];
 
 const projectPagetemplatePath = './Templates/ProjectPageTamplate.txt';
 const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
@@ -56,12 +56,12 @@ module.exports = {
           pledged: 0
         })
         .then(() => {
-          return knex('users').where({id:data.user_id}).update({
-            permissions: values[1]
-          })
-          .then(() => {
-            return saveAndReadSite(data);
-          })
+          return knex('users')
+            .where({id: data.user_id})
+            .update({permissions: values[1]})
+            .then(() => {
+              return saveAndReadSite(data);
+            })
         })
     },
 
@@ -105,57 +105,46 @@ module.exports = {
 
     //TODO: findAllProjects
     findAllProjects() {
-      return knex('projects').select()
-      .then(([projects]) => {
-        return projects;
-<<<<<<< HEAD
-      });
-=======
-      })
->>>>>>> 0167248fcab53197939a82f9d1c18dfe73dd8e06
+      return knex('projects')
+        .select()
+        .then(([projects]) => {
+          return projects;
+        })
     },
 
     //TODO: findAllUsers
     findAllUsers() {
-      return knex('users').select()
-      .then(([users]) => {
-        return users;
-      })
+      return knex('users')
+        .select()
+        .then(([users]) => {
+          return users;
+        })
     },
 
-
     removeProject,
-
 
     //TODO: removeUser
     removeUser(data) {
       return knex('projects')
-      .where({user_id: data.user_id})
-      .then((projects) => {
-        var i
-        console.log("the length is: " + projects.length);
-        for(i=0; i<projects.length; i++){
+        .where({user_id: data.user_id})
+        .then((projects) => {
+          console.log("the length is: " + projects.length);
+          for (var i = 0; i < projects.length - 1; i++) {
+            console.log(projects);
             removeProject(projects[i])
-        }
-        if (i!=projects.length)
-          return i+1
-        else
-          return 0
-      })
-      .then((index) => {
-        console.log("data retrived " + index);
-        if(index == 0)
-        {
-          console.log("data retrived " + index);
-          console.log("before deleting user: ");
-          return knex('users')
-          .where({id: data.user_id})
-          .del()
-        }
-      }).catch(e => {
-        console.log(e);
-      })
-    },
+          }
+          return removeProject(projects[projects.length - 1])
+          .then(() => {
+            console.log("before deleting user: ");
+            return knex('users')
+              .where({id: data.user_id})
+              .del()
+          })
+          .catch(e => {
+            console.log(e);
+          })
+        })
+      },
 
     //TODO: updateProject
     updateProject(data) {
@@ -176,13 +165,13 @@ module.exports = {
   function removeProject(data) {
     console.log(data);
     return knex('projectInvest')
-    .where({project_id: data.id})
-    .del()
-    .then(() => {
-      return knex('projects')
-        .where({id: data.id})
-        .del()
-    });
+      .where({project_id: data.id})
+      .del()
+      .then(() => {
+        return knex('projects')
+          .where({id: data.id})
+          .del()
+      });
   }
 
   function saltHashPassword({
@@ -256,31 +245,34 @@ module.exports = {
       })
   }
 
-function generateHomePage(){
-  var allBlocks = '';
-  return knex('projects').select()
-  .then((projects) => {
-    projects.forEach((project) => {
-      var temp = generateProjectBlock(project);
-      console.log(temp);
-      allBlocks += temp;
-    })
-    console.log("OUT: " + allBlocks);
-  })
-  .then(() => {
-    return fs.readFile(homePageTemplatePath)
-    .then(homepage => {
-      homepage = homepage.toString();
-      homepage = template(homepage, {allBlocks})
-      return homepage;
-    })
-  })
-}
+  function generateHomePage() {
+    var allBlocks = '';
+    return knex('projects')
+      .select()
+      .then((projects) => {
+        projects.forEach((project) => {
+          var temp = generateProjectBlock(project);
+          console.log(temp);
+          allBlocks += temp;
+        })
+        console.log("OUT: " + allBlocks);
+      })
+      .then(() => {
+        return fs
+          .readFile(homePageTemplatePath)
+          .then(homepage => {
+            homepage = homepage.toString();
+            homepage = template(homepage, {allBlocks})
+            return homepage;
+          })
+      })
+  }
 
-  function generateProjectBlock(project){
-    return fs.readFile(projectBlockTemplatePath)
-    .then(block => {
-      block = block.toString();
-      return template(block, {project});
-    })
+  function generateProjectBlock(project) {
+    return fs
+      .readFile(projectBlockTemplatePath)
+      .then(block => {
+        block = block.toString();
+        return template(block, {project});
+      })
   }

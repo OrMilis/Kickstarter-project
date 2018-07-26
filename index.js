@@ -54,14 +54,11 @@ app.post('/Invest', (req, res) => {
 })
 
 //TODO: findAllProjects
-<<<<<<< HEAD
-=======
 app.get('/findAllProjects', (req, res) => {
   store.findAllProjects()
   .then(() => res.sendStatus(200))
 })
 
->>>>>>> 0167248fcab53197939a82f9d1c18dfe73dd8e06
 app.get('/findAllProjects',(req,res) => {
   store.findAllProjects()
   .then((projects) =>{
