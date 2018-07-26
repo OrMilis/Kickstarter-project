@@ -107,16 +107,17 @@ module.exports = {
     findAllProjects() {
       return knex('projects')
         .select()
-        .then(([projects]) => {
-          return projects;
-        })
+      //.then((projects) => {
+      //    console.log("INSTORE: "+projects);
+      //    return projects;
+      //  })
     },
 
     //TODO: findAllUsers
     findAllUsers() {
       return knex('users')
         .select()
-        .then(([users]) => {
+        .then((users) => {
           return users;
         })
     },

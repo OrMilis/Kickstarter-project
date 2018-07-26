@@ -81,7 +81,7 @@ Project.addEventListener('submit', (e) => {
   post('/project', {user_name, project_name})
   .then(response => {
     if(response.ok)
-    return response.text();
+      return response.text();
   })
   .then(data => {
     console.log(data);
@@ -102,6 +102,75 @@ Project.addEventListener('submit', (e) => {
   })
 })
 
+const find = document.querySelector('.TestFind')
+find.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+});
+
+/*function buildList(path,elementId,property) {
+    var list;
+    get(path)
+    .then(response => {
+      if(response.ok)
+        return response.text()
+        .then(data => {
+          data = JSON.parse(data);
+          //console.log(data);
+          list = data
+          var ul = document.getElementById(elementId);
+          for(var i=0; i<list.length; i++){
+            //console.log(list[i]);
+            var li = document.createElement("li");
+            li.setAttribute('id',i)
+            li.appendChild(document.createTextNode(list[i][property]));
+            ul.appendChild(li);
+            }
+        })
+    })
+  }
+*/
+  function buildSelect(path,selectElement,property) {
+      var list;
+      get(path)//"/findAllUsers"
+      .then(response => {
+        if(response.ok)
+          return response.text()
+          .then(data => {
+            data = JSON.parse(data);
+            //console.log(data);
+            list = data
+            var select = document.getElementById(selectElement);//"selUsers"
+            for(var i=0; i<list.length; i++){
+              //console.log(list[i]);
+              var option = document.createElement("option");
+              option.Value = list[i].id
+              option.text = list[i][property]//.username
+              //li.appendChild(document.createTextNode(list[i][property]));
+              select.appendChild(option);
+              }
+          })
+      })
+    }
+
+/*function filterLists(filterId,listId) {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById(filterId);
+    filter = input.value.toUpperCase();
+    ul = document.getElementById(listId);
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        //a = li[i].getElementsByTagName("li")[0];
+        if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+*/
+
+
 function post (path, data) {
   return window.fetch(path, {
     method: 'POST',
@@ -114,11 +183,13 @@ function post (path, data) {
 }
 
 function get (path) {
-  return window.fetch(path, {
+  return window.fetch(path,
+    {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }
-  })
+  }
+)
 }

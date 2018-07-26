@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Node database tutorial</title>
+</head>
+<body>
+  <form class="getAllUsers">
+    <h1>Get All Users</h1>
+    <ul id="dynamic-list"></ul>
+    <input type="text" id="candidate"/>
+    !<button onclick="createUsersTable()">create list</button>
+    <button onclick="removeItem()">remove item</button>
+    <input type="submit" value="Get all users">
+  </form>
+  <form class = "TestFind">
+    <h1>test find</h1>
+    <input type="submit" class="find" value="find"/>
+  </form>
+  <form class = "getSpecificUser">
+    <h1>Get Specific User</h1>
+    <input type="text" class="specificUser" placeholder="specificUser">
+    <input type="submit" value="Get specific user">
+  </form>
+  <form class = "getAllProjects">
+    <h1>Get All Projects</h1>
+    <input type="submit" value="Get All Projects">
+  </form>
+<form>
+<h1>Get Specific Project</h1>
+  <input type="text" class="specificProject" placeholder="specificProject_name">
+  <input type="submit" value="Get specific Project">
+</form>
+
+<form class = "DeleteUser">
+  <h1>Delete User</h1>
+  <input type="text" class="userName" placeholder="userNname">
+  <input type="submit" value="Delete">
+</form>
+<form class = "DeleteProject">
+  <h1>Delete Project</h1>
+  <input type="text" class="projectName" placeholder="userName">
+  <input type="submit" value="Delete Project">
+</form>
+<div class = "Body"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

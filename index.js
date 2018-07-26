@@ -54,16 +54,19 @@ app.post('/Invest', (req, res) => {
 })
 
 //TODO: findAllProjects
-app.get('/findAllProjects', (req, res) => {
-  store.findAllProjects()
-  .then(() => res.sendStatus(200))
-})
+//app.get('/findAllProjects', (req, res) => {
+//  store.findAllProjects()
+//  .then(() => res.sendStatus(200))
+//})
 
 app.get('/findAllProjects',(req,res) => {
   store.findAllProjects()
-  .then((projects) =>{
-    if(projects)
+  .then((projects) => {
+    if(projects){
+      //console.log("IN INDEX: "+projects);
       res.send(projects)
+    }
+
     else {
       res.sendStatus(401)
     }
@@ -74,9 +77,9 @@ app.get('/findAllUsers',(req,res) => {
   store.findAllUsers()
   .then((users) => {
     if(users)
-      res.send(users)
+      return res.send(users)
     else
-        res.sendStatus(401);
+      return  res.sendStatus(401);
    })
 })
 //TODO: removeProject
