@@ -1,87 +1,64 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <title>Node database tutorial</title>
 </head>
-<body onload="buildSelect('/findAllUsers','selUsers','username');buildSelect('/findAllProjects','selProjects','project_name')">
-  <form class="Login">
-    <h1>Login</h1>
-    <input type="text" class="username" placeholder="username">
-    <input type="password" class="password" placeholder="password">
-    <input type="submit" value="Login">
-  </form>
-  <form class="CreateUser">
-    <h1>Create account</h1>
-    <input type="text" class="username" placeholder="username">
-    <input type="password" class="password" placeholder="password">
-    <input type="submit" value="Create">
-  </form>
-  project_name, start_date, end_date,
-    backers, investment, pledged
-  <form class = "CreateProject">
-    <h1>Create Project</h1>
-    <input type="text" class="project_name" placeholder="project_name">
-    <input type="datetime-local" class="start_date" placeholder="start_date">
-    <input type="datetime-local" class="end_date" placeholder="end_date">
-    <input type="text" class="investment" placeholder="investment">
-    <input type="text" class="project_info" placeholder="project_info">
-    <input type="text" class="project_video" placeholder="project_video">
-    <input type="text" class="project_image" placeholder="project_image">
-    <input type="submit" value="Create">
-  </form>
-<form class = "Invest">
-  <h1>Invest in project</h1>
-  <input type="text" class="project_name" placeholder="project_name">
-  <input type="text" class="investment" placeholder="investment">
-  <input type="submit" value="Invest">
-</form>
-<form class = "GetProject">
-  <h1>Get Project</h1>
-  <input type="text" class="username" placeholder="username">
-  <input type="text" class="project_name" placeholder="project_name">
-  <input type="submit" value="GetProject">
-</form>
-<form class = "TestFind">
-  <h1> test find</h1>
-      <input type="submit" class="find" value="find"/>
-</form>
-<form class="getAllUsers">
-  <h1>Get All Users</h1>
-  <input type="text" id="filterUser" onkeyup="filterLists('filterUser','users-list')" placeholder="username">
-  <ul id="users-list"></ul>
-  <button onclick="removeUser()">remove User</button>
-</form>
 
-<form >
-  <select id = "selUsers"
-    size = "10">
-  </select>
-  <button type = "button"
-    onclick = "deleteSomething()">
-    deleteUser
-  </button>
- </form>
-
-
-<form class="getAllProjects">
-  <h1>Get All Projects</h1>
-  <input type="text" id="filterProjects" onkeyup="filterLists('filterProjects','projects-list')" placeholder="username">
-  <ul id="projects-list"></ul>
-  <button onclick="removeProject()">remove Project</button>
-</form>
-<div class = "Body"></div>
+<body onload="getHomepage()">
+  <header class="navBar">
+    <nav>
+      <ul>
+        <li>
+          <a>Log in</a>
+        </li>
+        <li>
+          <a>Home</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="TestForms" hidden="true">
+    <form class="Login">
+      <h1>Login</h1>
+      <input type="text" class="username" placeholder="username">
+      <input type="password" class="password" placeholder="password">
+      <input type="submit" value="Login">
+    </form>
+    <form class="CreateUser">
+      <h1>Create account</h1>
+      <input type="text" class="username" placeholder="username">
+      <input type="password" class="password" placeholder="password">
+      <input type="submit" value="Create">
+    </form>
+    project_name, start_date, end_date, backers, investment, pledged
+    <form class="CreateProject">
+      <h1>Create Project</h1>
+      <input type="text" class="project_name" placeholder="project_name">
+      <input type="datetime-local" class="start_date" placeholder="start_date">
+      <input type="datetime-local" class="end_date" placeholder="end_date">
+      <input type="text" class="investment" placeholder="investment">
+      <input type="text" class="project_info" placeholder="project_info">
+      <input type="text" class="project_video" placeholder="project_video">
+      <input type="text" class="project_image" placeholder="project_image">
+      <input type="submit" value="Create">
+    </form>
+    <form class="Invest">
+      <h1>Invest in project</h1>
+      <input type="text" class="project_name" placeholder="project_name">
+      <input type="text" class="investment" placeholder="investment">
+      <input type="submit" value="Invest">
+    </form>
+    <form class="GetProject">
+      <h1>Get Project</h1>
+      <input type="text" class="username" placeholder="username">
+      <input type="text" class="project_name" placeholder="project_name">
+      <input type="submit" value="GetProject">
+    </form>
+  </div>
+  <div class="Body"></div>
   <script src="/app.js"></script>
 </body>
-
-<form >
-  <select id = "selProjects"
-    size = "10">
-  </select>
-  <button type = "button"
-    onclick = "deleteSomething()">
-   deleteProject
-  </button>
- </form>
 
 </html>

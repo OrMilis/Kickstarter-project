@@ -170,6 +170,20 @@ find.addEventListener('submit', (e) => {
 }
 */
 
+function getHomepage(){
+  get('/homepage')
+  .then(response => {
+    if(response.ok)
+    return response.text();
+  })
+  .then(data => {
+    console.log(data);
+    document.querySelector('.Body').innerHTML = data;
+  })
+  .catch(error => {
+    console.log('Error is', error);
+  })
+}
 
 function post (path, data) {
   return window.fetch(path, {

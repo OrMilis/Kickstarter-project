@@ -135,17 +135,17 @@ module.exports = {
             removeProject(projects[i])
           }
           return removeProject(projects[projects.length - 1])
-          .then(() => {
-            console.log("before deleting user: ");
-            return knex('users')
-              .where({id: data.user_id})
-              .del()
+            .then(() => {
+              console.log("before deleting user: ");
+              return knex('users')
+                .where({id: data.user_id})
+                .del()
+            })
+            .catch(e => {
+              console.log(e);
+            })
           })
-          .catch(e => {
-            console.log(e);
-          })
-        })
-      },
+    },
 
     //TODO: updateProject
     updateProject(data) {
@@ -235,12 +235,14 @@ module.exports = {
         return knex('projects')
           .where({project_name: data.project_name})
           .then(([project]) => {
-            var remaining_days = calculateDays(project.start_date, project.end_date)
+            var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
             return fs
               .readFile(projectPagetemplatePath)
               .then(site => {
                 site = site.toString();
-                return template(site, {data, count, project, remaining_days});
+                var percentage = Math.min((project.pledged / project.investment) * 100, 100);
+                percentage = Math.floor(percentage)
+                return template(site, {data, count, project, percentage, remaining_days});
               })
           })
       })
@@ -251,20 +253,37 @@ module.exports = {
     return knex('projects')
       .select()
       .then((projects) => {
-        projects.forEach((project) => {
-          var temp = generateProjectBlock(project);
-          console.log(temp);
-          allBlocks += temp;
-        })
-        console.log("OUT: " + allBlocks);
-      })
-      .then(() => {
-        return fs
-          .readFile(homePageTemplatePath)
-          .then(homepage => {
-            homepage = homepage.toString();
-            homepage = template(homepage, {allBlocks})
-            return homepage;
+        for (var i = 0; i < projects.length - 1; i++) {
+          generateProjectBlock(projects[i]).then(blockString => {
+            allBlocks += blockString;
+          })
+        }
+        return generateProjectBlock(projects[projects.length - 1])
+          .then(blockString => {
+            allBlocks += blockString;
+            return allBlocks;
+          })
+          .then((allBlocks) => {
+            return knex('projects').sum('backers')
+            .then(([backerSum]) => {
+              backerSum = backerSum['sum(`backers`)'];
+              return knex('projects').count().where('pledged', '>', 'investment')
+              .then(([fundedProjects]) => {
+                fundedProjects = fundedProjects[`count(*)`].toString();
+                var date = new Date()
+                return knex('projects').count().where(date, '<', 'end_date')
+                .then(([liveProjects]) => {
+                  liveProjects = liveProjects[`count(*)`].toString();
+                  return fs
+                    .readFile(homePageTemplatePath)
+                    .then(homepage => {
+                      homepage = homepage.toString();
+                      homepage = template(homepage, {allBlocks, date, backerSum, fundedProjects, liveProjects})
+                      return homepage;
+                    })
+                })
+              })
+            })
           })
       })
   }
@@ -274,6 +293,9 @@ module.exports = {
       .readFile(projectBlockTemplatePath)
       .then(block => {
         block = block.toString();
-        return template(block, {project});
+        var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
+        var percentage = Math.min((project.pledged / project.investment) * 100, 100);
+        percentage = Math.floor(percentage)
+        return template(block, {project, percentage, remaining_days});
       })
   }

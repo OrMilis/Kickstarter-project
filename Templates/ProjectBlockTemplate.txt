@@ -3,15 +3,15 @@
     <img src="https://img-9gag-fun.9cache.com/photo/am7yv72_460swp.webp" /><br /><br />
   </div>
   <div class="project-block-info">
-    <a class="bold">PROJECT_NAME</a><br />
+    <a class="bold">${project.project_name}</a><br />
     <a style="font-size:14px;">CREATOR_NAME</a>
   </div>
   <div class="project-block-statistics">
     <div id="myProgress">
-      <div id="myBar" style=""></div>
+      <div id="myBar" style="width: ${percentage}%"></div>
     </div>
-    <a>$PLEDEGE_AMOUNT Pledged</a><br />
-    <a>PRECENTAGE% Funded</a><br />
-    <a>TIME_REMAINING Time to go</a><br />
+    <a>${project.pledged} Pledged</a><br />
+    <a>${percentage}% Funded</a><br />
+    <a>${remaining_days} Time to go</a><br />
   </div>
 </div>
