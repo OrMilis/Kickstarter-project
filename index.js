@@ -8,7 +8,7 @@ const app = express()
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
-app.get('/homePage', (req, res) => {
+app.get('/homepage', (req, res) => {
   store.getHomePage()
   .then(site => {
     res.send(site);

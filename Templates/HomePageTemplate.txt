@@ -1,21 +1,21 @@
 <div class="homeStatistics">
   <table>
     <tr>
-      <td class="statisticsBox">
-        <a>TODAY_DATE</a> <br/>
+      <td class="statisticsBox divider">
+        <a>${date}</a> <br/>
         <a class="bold">Nice sentence</a>
       </td>
-      <td class="statisticsBox">
+      <td class="statisticsBox divider">
         <a>Total Backers</a> <br/>
-        <a class="bold">TOTAL_BACKERS</a>
+        <a class="bold">${backerSum}</a>
       </td>
-      <td class="statisticsBox">
+      <td class="statisticsBox divider">
         <a>Funded Projects</a> <br/>
-        <a class="bold">FUNDED_PROJECTS</a>
+        <a class="bold">${fundedProjects}</a>
       </td>
       <td class="statisticsBox">
         <a>Live Projects</a> <br/>
-        <a class="bold">LIVE_PROJECTS</a>
+        <a class="bold">${liveProjects}</a>
       </td>
     </tr>
   </table>

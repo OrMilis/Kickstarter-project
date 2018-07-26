@@ -21,7 +21,7 @@
   </span>
   <span class="statistics">
     <div id="myProgress">
-      <div id="myBar" style="width:${ (project.pledged / project.investment) * 100}%"></div>
+      <div id="myBar" style="width:${percentage}%"></div>
     </div>
     <div>
       <p>
