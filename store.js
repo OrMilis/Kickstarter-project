@@ -108,7 +108,11 @@ module.exports = {
       return knex('projects').select()
       .then(([projects]) => {
         return projects;
+<<<<<<< HEAD
       });
+=======
+      })
+>>>>>>> 0167248fcab53197939a82f9d1c18dfe73dd8e06
     },
 
     //TODO: findAllUsers
@@ -119,11 +123,38 @@ module.exports = {
       })
     },
 
-    //TODO: removeProject
-    removeProject(data) {
+
+    removeProject,
+
+
+    //TODO: removeUser
+    removeUser(data) {
       return knex('projects')
-        .where({project_id: data.project_id})
-        .del();
+      .where({user_id: data.user_id})
+      .then((projects) => {
+        var i
+        console.log("the length is: " + projects.length);
+        for(i=0; i<projects.length; i++){
+            removeProject(projects[i])
+        }
+        if (i!=projects.length)
+          return i+1
+        else
+          return 0
+      })
+      .then((index) => {
+        console.log("data retrived " + index);
+        if(index == 0)
+        {
+          console.log("data retrived " + index);
+          console.log("before deleting user: ");
+          return knex('users')
+          .where({id: data.user_id})
+          .del()
+        }
+      }).catch(e => {
+        console.log(e);
+      })
     },
 
     //TODO: updateProject
@@ -140,6 +171,18 @@ module.exports = {
       var path = generateSitePath(data);
       return getProjectSite(path);
     }
+  }
+
+  function removeProject(data) {
+    console.log(data);
+    return knex('projectInvest')
+    .where({project_id: data.id})
+    .del()
+    .then(() => {
+      return knex('projects')
+        .where({id: data.id})
+        .del()
+    });
   }
 
   function saltHashPassword({

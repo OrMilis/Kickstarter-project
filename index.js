@@ -54,6 +54,14 @@ app.post('/Invest', (req, res) => {
 })
 
 //TODO: findAllProjects
+<<<<<<< HEAD
+=======
+app.get('/findAllProjects', (req, res) => {
+  store.findAllProjects()
+  .then(() => res.sendStatus(200))
+})
+
+>>>>>>> 0167248fcab53197939a82f9d1c18dfe73dd8e06
 app.get('/findAllProjects',(req,res) => {
   store.findAllProjects()
   .then((projects) =>{
@@ -75,6 +83,24 @@ app.get('/findAllUsers',(req,res) => {
    })
 })
 //TODO: removeProject
+app.delete('/removeProject',(req,res) => {
+  store.removeProject({
+    id: req.body.project_id
+  })
+  .then(() => {
+    return res.sendStatus(200);
+  })
+})
+
+//TODO: remove users
+app.delete('/removeUser',(req,res) => {
+  store.removeUser({
+    user_id: req.body.user_id
+  })
+  .then(() => {
+    return res.sendStatus(200);
+  })
+})
 
 //TODO: updateProject
 
