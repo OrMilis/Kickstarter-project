@@ -7,11 +7,17 @@
 </head>
 
 <body onload="getHomepage()">
+  <button id="deleteUserClick" onclick()="JavaScript:alert('fuck me');">delete user</button>
   <header class="navBar">
     <nav>
       <ul>
         <li>
-          <a>Log in</a>
+          <form class="Login">
+            <h1>Login</h1>
+            <input type="text" class="username" placeholder="username">
+            <input type="password" class="password" placeholder="password">
+            <input type="submit" value="Login">
+          </form>
         </li>
         <li>
           <a>Home</a>
@@ -19,6 +25,10 @@
       </ul>
     </nav>
   </header>
+  <div class="adminPage">
+    <div class="adminLists"> </div>
+    <button onclick="deleteUser();" id="deleteUserClick">delete user</button>
+  </div>
   <div class="TestForms" hidden="true">
     <form class="Login">
       <h1>Login</h1>
@@ -58,7 +68,7 @@
     </form>
   </div>
   <div class="Body"></div>
-  <script src="/app.js"></script>
 </body>
+<script src="/app.js"></script>
 
 </html>

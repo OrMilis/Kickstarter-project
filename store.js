@@ -8,12 +8,17 @@ const values = ['BACKER', 'CREATOR', 'ADMIN'];
 const projectPagetemplatePath = './Templates/ProjectPageTamplate.txt';
 const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
 const homePageTemplatePath = './Templates/homePageTemplate.txt';
+const adminPageTemplatePath = './Templates/AdminPageTemplate.txt';
 
 module.exports = {
   saltHashPassword,
 
   getHomePage() {
     return generateHomePage();
+  },
+
+  getAdminPage(){
+    return genarateAdminPage();
   },
 
   createUser({username, password}) {
@@ -103,24 +108,6 @@ module.exports = {
         })
     },
 
-    //TODO: findAllProjects
-    findAllProjects() {
-      return knex('projects')
-        .select()
-      //.then((projects) => {
-      //    console.log("INSTORE: "+projects);
-      //    return projects;
-      //  })
-    },
-
-    //TODO: findAllUsers
-    findAllUsers() {
-      return knex('users')
-        .select()
-        .then((users) => {
-          return users;
-        })
-    },
 
     removeProject,
 
@@ -161,6 +148,25 @@ module.exports = {
       var path = generateSitePath(data);
       return getProjectSite(path);
     }
+  }
+
+  //TODO: findAllUsers
+  function findAllUsers() {
+    return knex('users')
+      .select()
+      .then((users) => {
+        return users;
+      })
+  }
+
+  //TODO: findAllProjects
+  function findAllProjects() {
+    return knex('projects')
+      .select()
+    //.then((projects) => {
+    //    console.log("INSTORE: "+projects);
+    //    return projects;
+    //  })
   }
 
   function removeProject(data) {
@@ -299,3 +305,59 @@ module.exports = {
         return template(block, {project, percentage, remaining_days});
       })
   }
+
+  function genarateAdminPage(){
+    var adminTables = ''
+    return generateAdminUserTabel()
+    .then(usersTabel => {
+      adminTables += usersTabel
+      return generateAdminProjectTabel()
+      .then(projectsTable => {
+        adminTables += projectsTable
+        return adminTables
+      })
+      .then(adminTables => {
+        return fs
+        .readFile(adminPageTemplatePath)
+        .then(adminPage => {
+          adminPage = adminPage.toString()
+          adminPage = template(adminPage,{adminTables})
+          return adminPage
+        })
+      })
+    })
+  }
+
+    function generateAdminUserTabel(){
+      var table = '<select id = "selUsers" size = "10"> ${allOptions} </select>'
+      var allOptions = ''
+      var optionFormat = '<option value = ${user.id} >${user.username}</option>'
+      return findAllUsers()
+      .then(users => {
+        for(var i=0; i<users.length-1; i++){
+          var user=users[i]
+          allOptions += template(optionFormat,{user})
+        }
+        var user=users[users.length-1]
+        allOptions += template(optionFormat,{user})
+        table = template(table,{allOptions})
+        return table
+      });
+    }
+
+    function generateAdminProjectTabel(){
+      var table = '<select id = "selProjects" size = "10"> ${allOptions} </select>'
+      var allOptions = ''
+      var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
+      return findAllProjects()
+      .then(projects => {
+        for(var i=0; i<projects.length-1; i++){
+          var project=projects[i]
+          allOptions += template(optionFormat,{project})
+        }
+        var project=projects[projects.length-1]
+        allOptions += template(optionFormat,{project})
+        table = template(table,{allOptions})
+        return table
+      });
+    }

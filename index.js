@@ -72,14 +72,11 @@ app.get('/findAllProjects',(req,res) => {
     }
   })
 })
-//TODO: findAllUsers
-app.get('/findAllUsers',(req,res) => {
-  store.findAllUsers()
-  .then((users) => {
-    if(users)
-      return res.send(users)
-    else
-      return  res.sendStatus(401);
+//FIXME: CHANGE TO GET ADMIN PAGE
+app.get('/adminPage',(req,res) => {
+  store.getAdminPage()
+  .then((adminPage) => {
+      return res.send(adminPage)
    })
 })
 //TODO: removeProject
