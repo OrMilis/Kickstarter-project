@@ -174,8 +174,28 @@ module.exports = {
       .del()
       .then(() => {
         return knex('projects')
+          .select()
           .where({id: data.id})
-          .del()
+          .then(([project]) => {
+            return knex('users')
+              .select('username')
+              .where({id: project.user_id})
+              .then(([username]) => {
+                var projectData = {
+                  user_name: username['username'],
+                  project_name: project['project_name']
+                }
+                var path = generateSitePath(projectData)
+                console.log("PATH: " + path);
+                return fs
+                  .remove(path)
+                  .then(() => {
+                    return knex('projects')
+                      .where({id: data.id})
+                      .del()
+                  })
+              })
+          })
       });
   }
 
@@ -197,6 +217,7 @@ module.exports = {
   }
 
   function generateSitePath(data) {
+    console.log(data);
     return `./projects/${data.user_name}/${data.project_name}.json`;
   }
 
