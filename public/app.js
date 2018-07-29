@@ -248,7 +248,7 @@ function getHomepage() {
       }
     )
     .then(data => {
-      console.log(data);
+      //console.log(data);
       document
         .querySelector('.Body')
         .innerHTML = data;
@@ -257,6 +257,21 @@ function getHomepage() {
       console.log('Error is', error);
     })
   }
+
+  function getLoginPage(){
+    get('/logInPage')
+    .then(response => {
+      if (response.ok)
+        return response.text()
+    })
+    .then(data => {
+      document.querySelector('.Body').innerHTML = data;
+    })
+    .catch(error => {
+      console.log('Error is',error)
+    })
+  }
+
 
 function getAdminPage() {
   get('/adminPage')
@@ -288,10 +303,8 @@ function deleteUser() {
 function deleteProject() {
   const project = document.querySelector('.projectsList')
   console.log(project.value);
-  var id = project
-    .value
-    this
-    .deleteAPI('/removeProject', {id})
+  var id = project.value
+  this.deleteAPI('/removeProject', {id} )
 }
 
 function post(path, data) {

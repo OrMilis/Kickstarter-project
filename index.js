@@ -15,6 +15,13 @@ app.get('/homepage', (req, res) => {
   })
 })
 
+app.get('/logInPage', (req, res) => {
+  store.getLoginPage()
+  .then(site => {
+    res.send(site);
+  })
+})
+
 app.post('/createUser', (req, res) => {
   store
     .createUser({
@@ -82,7 +89,7 @@ app.get('/adminPage',(req,res) => {
 //TODO: removeProject
 app.delete('/removeProject',(req,res) => {
   store.removeProject({
-    id: req.body.project_id
+    id: req.body.id
   })
   .then(() => {
     return res.sendStatus(200);
