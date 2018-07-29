@@ -120,17 +120,19 @@ module.exports = {
             console.log(projects);
             removeProject(projects[i])
           }
-          return removeProject(projects[projects.length - 1])
-            .then(() => {
+          if (projects > 0) {
+            return removeProject(projects[projects.length - 1]).then(() => {
               console.log("before deleting user: ");
               return knex('users')
                 .where({id: data.user_id})
                 .del()
             })
-            .catch(e => {
-              console.log(e);
-            })
-          })
+          } else {
+            return knex('users')
+              .where({id: data.user_id})
+              .del()
+          }
+        })
     },
 
     //TODO: updateProject
