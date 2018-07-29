@@ -117,7 +117,7 @@ Invest.addEventListener('submit', (e) => {
   post('/Invest', {user_id, project_name, investment})
 })
 
-const Project = document.querySelector('.GetProject')
+/*const Project = document.querySelector('.GetProject')
 Project.addEventListener('submit', (e) => {
   e.preventDefault()
   const user_name = Project
@@ -154,7 +154,7 @@ Project.addEventListener('submit', (e) => {
     .catch(error => {
       console.log('Error is', error);
     })
-  })
+  })*/
 
 function getProjectPage(user_name, project_name){
   post('/project', {user_name, project_name})
@@ -163,7 +163,6 @@ function getProjectPage(user_name, project_name){
         return response.text();
       })
     .then(data => {
-      console.log(data);
       document.querySelector('.Body').innerHTML = data;
     })
     .catch(error => {
@@ -199,7 +198,7 @@ function buildList(path,elementId,property) {
     })
   }
 */
-function buildSelect(path, selectElement, property) {
+/*function buildSelect(path, selectElement, property) {
   var list;
   get(path) //"/findAllUsers"
     .then(response => {
@@ -221,7 +220,7 @@ function buildSelect(path, selectElement, property) {
           }
         })
     })
-}
+}*/
 
 /*function filterLists(filterId,listId) {
     var input, filter, ul, li, a, i;
