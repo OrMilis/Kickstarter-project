@@ -165,7 +165,14 @@ function getProjectPage(user_name, project_name) {
       }
     )
     .then(data => {
+<<<<<<< HEAD
       document.querySelector('.Body').innerHTML = data;
+=======
+      console.log(data);
+      document
+        .querySelector('.Body')
+        .innerHTML = data;
+>>>>>>> 6f3265435817b7c422c2f62e3a474f463f7e868d
     })
     .catch(error => {
       console.log('Error is', error);
