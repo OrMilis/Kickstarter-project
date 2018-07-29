@@ -17,7 +17,7 @@ module.exports = {
     return generateHomePage();
   },
 
-  getAdminPage(){
+  getAdminPage() {
     return genarateAdminPage();
   },
 
@@ -108,7 +108,6 @@ module.exports = {
         })
     },
 
-
     removeProject,
 
     //TODO: removeUser
@@ -161,8 +160,7 @@ module.exports = {
 
   //TODO: findAllProjects
   function findAllProjects() {
-    return knex('projects')
-      .select()
+    return knex('projects').select()
     //.then((projects) => {
     //    console.log("INSTORE: "+projects);
     //    return projects;
@@ -264,34 +262,40 @@ module.exports = {
             allBlocks += blockString;
           })
         }
-        return generateProjectBlock(projects[projects.length - 1])
-          .then(blockString => {
-            allBlocks += blockString;
-            return allBlocks;
-          })
-          .then((allBlocks) => {
-            return knex('projects').sum('backers')
-            .then(([backerSum]) => {
-              backerSum = backerSum['sum(`backers`)'];
-              return knex('projects').count().where('pledged', '>', 'investment')
-              .then(([fundedProjects]) => {
-                fundedProjects = fundedProjects[`count(*)`].toString();
-                var date = new Date()
-                return knex('projects').count().where(date, '<', 'end_date')
-                .then(([liveProjects]) => {
-                  liveProjects = liveProjects[`count(*)`].toString();
-                  return fs
-                    .readFile(homePageTemplatePath)
-                    .then(homepage => {
-                      homepage = homepage.toString();
-                      homepage = template(homepage, {allBlocks, date, backerSum, fundedProjects, liveProjects})
-                      return homepage;
+        if (projects.length > 0)
+          return generateProjectBlock(projects[projects.length - 1])
+            .then(blockString => {
+              allBlocks += blockString;
+              return allBlocks;
+            })
+            .then((allBlocks) => {
+              return knex('projects')
+                .sum('backers')
+                .then(([backerSum]) => {
+                  backerSum = backerSum['sum(`backers`)'];
+                  return knex('projects')
+                    .count()
+                    .where('pledged', '>', 'investment')
+                    .then(([fundedProjects]) => {
+                      fundedProjects = fundedProjects[`count(*)`].toString();
+                      var date = new Date()
+                      return knex('projects')
+                        .count()
+                        .where(date, '<', 'end_date')
+                        .then(([liveProjects]) => {
+                          liveProjects = liveProjects[`count(*)`].toString();
+                          return fs
+                            .readFile(homePageTemplatePath)
+                            .then(homepage => {
+                              homepage = homepage.toString();
+                              homepage = template(homepage, {allBlocks, date, backerSum, fundedProjects, liveProjects})
+                              return homepage;
+                            })
+                        })
                     })
                 })
-              })
             })
-          })
-      })
+        })
   }
 
   function generateProjectBlock(project) {
@@ -306,58 +310,57 @@ module.exports = {
       })
   }
 
-  function genarateAdminPage(){
+  function genarateAdminPage() {
     var adminTables = ''
-    return generateAdminUserTabel()
-    .then(usersTabel => {
+    return generateAdminUserTabel().then(usersTabel => {
       adminTables += usersTabel
       return generateAdminProjectTabel()
-      .then(projectsTable => {
-        adminTables += projectsTable
-        return adminTables
-      })
-      .then(adminTables => {
-        return fs
-        .readFile(adminPageTemplatePath)
-        .then(adminPage => {
-          adminPage = adminPage.toString()
-          adminPage = template(adminPage,{adminTables})
-          return adminPage
+        .then(projectsTable => {
+          adminTables += projectsTable
+          return adminTables
         })
-      })
+        .then(adminTables => {
+          return fs
+            .readFile(adminPageTemplatePath)
+            .then(adminPage => {
+              adminPage = adminPage.toString()
+              adminPage = template(adminPage, {adminTables})
+              return adminPage
+            })
+        })
     })
   }
 
-    function generateAdminUserTabel(){
-      var table = '<select id = "selUsers" size = "10"> ${allOptions} </select>'
-      var allOptions = ''
-      var optionFormat = '<option value = ${user.id} >${user.username}</option>'
-      return findAllUsers()
-      .then(users => {
-        for(var i=0; i<users.length-1; i++){
-          var user=users[i]
-          allOptions += template(optionFormat,{user})
-        }
-        var user=users[users.length-1]
-        allOptions += template(optionFormat,{user})
-        table = template(table,{allOptions})
-        return table
-      });
-    }
+  function generateAdminUserTabel() {
+    var table = '<select class = "usersList" size = "10"> ${allOptions} </select>'
+    var allOptions = ''
+    var optionFormat = '<option value = ${user.id} >${user.username}</option>'
+    return findAllUsers().then(users => {
+      for (var i = 0; i < users.length - 1; i++) {
+        var user = users[i]
+        allOptions += template(optionFormat, {user})
+      }
+      var user = users[users.length - 1]
+      allOptions += template(optionFormat, {user})
+      table = template(table, {allOptions})
+      return table
+    });
+  }
 
-    function generateAdminProjectTabel(){
-      var table = '<select id = "selProjects" size = "10"> ${allOptions} </select>'
-      var allOptions = ''
-      var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
-      return findAllProjects()
-      .then(projects => {
-        for(var i=0; i<projects.length-1; i++){
-          var project=projects[i]
-          allOptions += template(optionFormat,{project})
-        }
-        var project=projects[projects.length-1]
-        allOptions += template(optionFormat,{project})
-        table = template(table,{allOptions})
-        return table
-      });
-    }
+  function generateAdminProjectTabel() {
+    var table = '<select class = "projectsList" size = "10"> ${allOptions} </select>'
+    var allOptions = ''
+    var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
+    return findAllProjects().then(projects => {
+      for (var i = 0; i < projects.length - 1; i++) {
+        var project = projects[i]
+        allOptions += template(optionFormat, {project})
+      }
+      if (projects.length > 0) {
+        var project = projects[projects.length - 1]
+        allOptions += template(optionFormat, {project})
+      }
+      table = template(table, {allOptions})
+      return table
+    });
+  }

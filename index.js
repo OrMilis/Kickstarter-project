@@ -91,6 +91,7 @@ app.delete('/removeProject',(req,res) => {
 
 //TODO: remove users
 app.delete('/removeUser',(req,res) => {
+console.log(req.body.user_id);
   store.removeUser({
     user_id: req.body.user_id
   })

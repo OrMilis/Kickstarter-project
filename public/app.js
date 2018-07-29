@@ -252,7 +252,7 @@ function getAdminPage() {
       }
     )
     .then(data => {
-      console.log(data);
+      //console.log(data);
       const admin_page = document.querySelector('.adminLists')
       admin_page.innerHTML = data;
       document.getElementById('deleteUserClick')
@@ -263,7 +263,17 @@ function getAdminPage() {
   }
 
 function deleteUser() {
-  this.delete('/delete', )
+  const userList = document.querySelector('.usersList')
+  console.log(userList.value);
+  var user_id = userList.value
+  this.deleteAPI('/removeUser', {user_id} )
+}
+
+function deleteProject() {
+  const project = document.querySelector('.projectsList')
+  console.log(project.value);
+  var id = projectsList.value
+  this.deleteAPI('/removeProjet', {id} )
 }
 
 function post(path, data) {
@@ -287,11 +297,11 @@ function get(path) {
   })
 }
 
-function delete(path,data) {
-  return window.fetch(path, {
+function deleteAPI(path,data) {
+  console.log(JSON.stringify(data));
+  return window.fetch(path+"/", {
     method: 'DELETE',
     headers: {
-      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)

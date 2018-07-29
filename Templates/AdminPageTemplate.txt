@@ -1,3 +1,7 @@
 <div class="adminTables">
   ${adminTables}
+  <div>
+    <button onclick="deleteUser();" id="deleteUserClick">delete user</button>
+    <button onclick="deleteProject();" id="deleteProjectClick">delete Project</button>
+  </div>
 </div>
