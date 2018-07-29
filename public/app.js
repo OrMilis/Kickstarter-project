@@ -263,7 +263,7 @@ function getAdminPage() {
   }
 
 function deleteUser() {
-  deleteUser('/delete',)
+  this.delete('/delete', )
 }
 
 function post(path, data) {
@@ -287,7 +287,7 @@ function get(path) {
   })
 }
 
-function deleteUser(path,data) {
+function delete(path,data) {
   return window.fetch(path, {
     method: 'DELETE',
     headers: {
