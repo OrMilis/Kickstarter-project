@@ -16,7 +16,7 @@ CreateUser.addEventListener('submit', (e) => {
   post('/createUser', {username, password})
 })
 
-const Login = document.querySelector('.Login')
+const Login = document.querySelector('.Body')
 Login.addEventListener('submit', (e) => {
   e.preventDefault()
   const username = Login
@@ -132,7 +132,8 @@ Project.addEventListener('submit', (e) => {
     .then(response => {
       if (response.ok)
         return response.text();
-      })
+      }
+    )
     .then(data => {
       console.log(data);
       document
@@ -156,19 +157,20 @@ Project.addEventListener('submit', (e) => {
     })
   })*/
 
-function getProjectPage(user_name, project_name){
+function getProjectPage(user_name, project_name) {
   post('/project', {user_name, project_name})
     .then(response => {
       if (response.ok)
         return response.text();
-      })
+      }
+    )
     .then(data => {
       document.querySelector('.Body').innerHTML = data;
     })
     .catch(error => {
       console.log('Error is', error);
     })
-}
+  }
 
 /*const find = document.querySelector('.TestFind')
 find.addEventListener('submit', (e) => {
@@ -257,20 +259,54 @@ function getHomepage() {
     })
   }
 
-  function getLoginPage(){
-    get('/logInPage')
+function getLoginPage() {
+  get('/logInPage')
     .then(response => {
       if (response.ok)
         return response.text()
     })
     .then(data => {
-      document.querySelector('.Body').innerHTML = data;
+      document
+        .querySelector('.Body')
+        .innerHTML = data;
     })
     .catch(error => {
-      console.log('Error is',error)
+      console.log('Error is', error)
     })
   }
 
+function logIn() {
+  const username = Login
+    .querySelector('.username')
+    .value
+  const password = Login
+    .querySelector('.password')
+    .value
+    post('/login', {username, password})
+    .then(response => {
+      if (response.ok)
+        return response.text();
+      }
+    )
+    .then(data => {
+      data = JSON.parse(data);
+      logedInUser.username = username;
+      logedInUser.id = data.id;
+      logedInUser.permissions = data.permissions;
+      if (data.permissions == 'ADMIN') {
+        getAdminPage();
+      } else {
+        document
+          .querySelector('.adminPage')
+          .innerHTML = "<h1>Login Sucssesful!</h1>";
+      }
+      console.log(data);
+      console.log(logedInUser);
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+  }
 
 function getAdminPage() {
   get('/adminPage')
@@ -302,8 +338,10 @@ function deleteUser() {
 function deleteProject() {
   const project = document.querySelector('.projectsList')
   console.log(project.value);
-  var id = project.value
-  this.deleteAPI('/removeProject', {id} )
+  var id = project
+    .value
+    this
+    .deleteAPI('/removeProject', {id})
 }
 
 function post(path, data) {
