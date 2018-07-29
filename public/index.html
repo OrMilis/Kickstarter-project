@@ -8,25 +8,27 @@
 
 <body onload="getHomepage()">
   <header class="navBar">
+    <div class="tab">
+      <button class="tablinks" onclick="getHomepage()">Home</button>
+      <button class="tablinks" onclick="getLoginPage()">Log In</button>
+    </div>
     <nav>
       <ul>
         <li>
-          <form class="Login">
-            <h1>Login</h1>
-            <input type="text" class="username" placeholder="username">
-            <input type="password" class="password" placeholder="password">
-            <input type="submit" value="Login">
-          </form>
-        </li>
-        <li>
-          <a>Home</a>
+          <div class="LogIn">
+
+          </div>
         </li>
       </ul>
     </nav>
   </header>
+
+
+
   <div class="adminPage">
     <div class="adminLists"> </div>
   </div>
+
   <div class="TestForms" hidden="true">
     <form class="Login">
       <h1>Login</h1>

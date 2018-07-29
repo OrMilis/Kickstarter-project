@@ -9,12 +9,21 @@ const projectPagetemplatePath = './Templates/ProjectPageTamplate.txt';
 const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
 const homePageTemplatePath = './Templates/homePageTemplate.txt';
 const adminPageTemplatePath = './Templates/AdminPageTemplate.txt';
+const logInPageTemplatePath = './Templates/LogInPageTemplate.txt';
 
 module.exports = {
   saltHashPassword,
 
   getHomePage() {
     return generateHomePage();
+  },
+
+  getLoginPage(){
+    return fs
+    .readFile(logInPageTemplatePath)
+    .then((logInPage) => {
+      return logInPage.toString()
+    })
   },
 
   getAdminPage() {
@@ -274,6 +283,8 @@ module.exports = {
           })
       })
   }
+
+
 
   function generateHomePage() {
     var allBlocks = '';
