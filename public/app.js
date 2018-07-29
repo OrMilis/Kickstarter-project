@@ -272,7 +272,7 @@ function deleteUser() {
 function deleteProject() {
   const project = document.querySelector('.projectsList')
   console.log(project.value);
-  var id = projectsList.value
+  var id = project.value
   this.deleteAPI('/removeProjet', {id} )
 }
 
