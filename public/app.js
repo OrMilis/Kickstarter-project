@@ -132,8 +132,7 @@ Project.addEventListener('submit', (e) => {
     .then(response => {
       if (response.ok)
         return response.text();
-      }
-    )
+      })
     .then(data => {
       console.log(data);
       document
@@ -156,6 +155,21 @@ Project.addEventListener('submit', (e) => {
       console.log('Error is', error);
     })
   })
+
+function getProjectPage(user_name, project_name){
+  post('/project', {user_name, project_name})
+    .then(response => {
+      if (response.ok)
+        return response.text();
+      })
+    .then(data => {
+      console.log(data);
+      document.querySelector('.Body').innerHTML = data;
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+}
 
 /*const find = document.querySelector('.TestFind')
 find.addEventListener('submit', (e) => {
@@ -265,15 +279,19 @@ function getAdminPage() {
 function deleteUser() {
   const userList = document.querySelector('.usersList')
   console.log(userList.value);
-  var user_id = userList.value
-  this.deleteAPI('/removeUser', {user_id} )
+  var user_id = userList
+    .value
+    this
+    .deleteAPI('/removeUser', {user_id})
 }
 
 function deleteProject() {
   const project = document.querySelector('.projectsList')
   console.log(project.value);
-  var id = project.value
-  this.deleteAPI('/removeProjet', {id} )
+  var id = project
+    .value
+    this
+    .deleteAPI('/removeProject', {id})
 }
 
 function post(path, data) {
@@ -297,9 +315,9 @@ function get(path) {
   })
 }
 
-function deleteAPI(path,data) {
+function deleteAPI(path, data) {
   console.log(JSON.stringify(data));
-  return window.fetch(path+"/", {
+  return window.fetch(path + "/", {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

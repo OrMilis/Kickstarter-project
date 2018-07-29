@@ -322,14 +322,20 @@ module.exports = {
   }
 
   function generateProjectBlock(project) {
-    return fs
-      .readFile(projectBlockTemplatePath)
-      .then(block => {
-        block = block.toString();
-        var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
-        var percentage = Math.min((project.pledged / project.investment) * 100, 100);
-        percentage = Math.floor(percentage)
-        return template(block, {project, percentage, remaining_days});
+    return knex('users')
+      .select('username')
+      .where({id: project.user_id})
+      .then(([user]) => {
+        return fs
+          .readFile(projectBlockTemplatePath)
+          .then(block => {
+            block = block.toString();
+            var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
+            var percentage = Math.min((project.pledged / project.investment) * 100, 100);
+            percentage = Math.floor(percentage)
+            var username = user['username']
+            return template(block, {project, username, percentage, remaining_days});
+          })
       })
   }
 

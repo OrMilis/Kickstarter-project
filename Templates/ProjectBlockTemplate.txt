@@ -1,5 +1,5 @@
 <div class="grid-item">
-  <div class="project-image">
+  <div class="project-image" href="./" onclick="getProjectPage('${username}', ${project.project_name})">
     <img src="https://img-9gag-fun.9cache.com/photo/am7yv72_460swp.webp" /><br /><br />
   </div>
   <div class="project-block-info">
