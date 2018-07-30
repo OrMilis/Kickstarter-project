@@ -1,10 +1,10 @@
 <div class="grid-item">
-  <div class="project-image" href="./" onclick="getProjectPage('${username}', ${project.project_name})">
-    <img src="https://img-9gag-fun.9cache.com/photo/am7yv72_460swp.webp" /><br /><br />
+  <div class="project-image" href onclick="getProjectPage('${projectFile.user_name}', '${project.project_name}')">
+    <img src="${projectFile.project_image}" /><br /><br />
   </div>
   <div class="project-block-info">
     <a class="bold">${project.project_name}</a><br />
-    <a style="font-size:14px;">CREATOR_NAME</a>
+    <a style="font-size:14px;">${projectFile.user_name}</a>
   </div>
   <div class="project-block-statistics">
     <div id="myProgress">

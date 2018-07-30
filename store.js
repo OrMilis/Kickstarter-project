@@ -337,16 +337,23 @@ module.exports = {
       .select('username')
       .where({id: project.user_id})
       .then(([user]) => {
-        return fs
-          .readFile(projectBlockTemplatePath)
-          .then(block => {
-            block = block.toString();
-            var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
-            var percentage = Math.min((project.pledged / project.investment) * 100, 100);
-            percentage = Math.floor(percentage)
-            var username = user['username']
-            return template(block, {project, username, percentage, remaining_days});
-          })
+        var user_name = user['username']
+        var project_name = project.project_name
+        var path = generateSitePath({user_name, project_name});
+        console.log("PATH: " + path);
+        return fs.
+        readJson(path)
+        .then((projectFile) => {
+          return fs
+            .readFile(projectBlockTemplatePath)
+            .then(block => {
+              block = block.toString();
+              var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
+              var percentage = Math.min((project.pledged / project.investment) * 100, 100);
+              percentage = Math.floor(percentage)
+              return template(block, {project, projectFile, percentage, remaining_days});
+            })
+        }) //TODO :FINISH IT!!!
       })
   }
 

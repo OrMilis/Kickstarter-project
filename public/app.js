@@ -16,7 +16,7 @@ CreateUser.addEventListener('submit', (e) => {
   post('/createUser', {username, password})
 })
 
-const Login = document.querySelector('.Body')
+/*const Login = document.querySelector('.Body')
 Login.addEventListener('submit', (e) => {
   e.preventDefault()
   const username = Login
@@ -49,7 +49,7 @@ Login.addEventListener('submit', (e) => {
     .catch(error => {
       console.log('Error is', error);
     })
-  })
+  })*/
 
 const CreateProject = document.querySelector('.CreateProject')
 CreateProject.addEventListener('submit', (e) => {
@@ -280,8 +280,9 @@ function getLoginPage() {
   }
 
 function logIn() {
+  const Login = document.querySelector('.Body')
   const username = Login
-    .querySelector('.username')
+.querySelector('.username')
     .value
   const password = Login
     .querySelector('.password')
