@@ -1,0 +1,14 @@
+<div>
+  <div>
+    <a>${myName}</a>
+  </div>
+  <div>
+    <div>${myProjects}</div>
+    <div>${myPledges}</div>
+  </div>
+  <div>
+    <a>Start your own projects</a>
+    <button>Become a creator</button>
+  </div>
+
+</div>
