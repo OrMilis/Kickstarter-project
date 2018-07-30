@@ -104,7 +104,7 @@ CreateProject.addEventListener('submit', (e) => {
       console.log('Error is', error);
     })
   })
-
+/*
 const Invest = document.querySelector('.Invest')
 Invest.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -117,7 +117,7 @@ Invest.addEventListener('submit', (e) => {
     .value
   post('/Invest', {user_id, project_name, investment})
 })
-
+*/
 /*const Project = document.querySelector('.GetProject')
 Project.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -299,6 +299,40 @@ function getSignUpPage() {
   }
 
 function getProfilePage() {
+  if (logedInUser.permissions == 'ADMIN')
+    getProfilePageAsAdmin()
+  else if (logedInUser.permissions == 'CREATOR')
+    getProfilePageAsCreator()
+  else
+    getProfilePageAsBacker()
+}
+
+function getProfilePageAsAdmin() {
+  get('/adminPage')
+    .then(response => {
+      if (response.ok)
+        return response.text();
+      }
+    )
+    .then(data => {
+      //console.log(data);
+      const admin_page = document.querySelector('.Body')
+      admin_page.innerHTML = data;
+      document.getElementById('deleteUserClick')
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+  }
+
+function getProfilePageAsCreator() {
+  post('/creatorPage', logedInUser)
+}
+
+function getProfilePageAsBacker() {
+  post('/backerPage', logedInUser)
+}
+/*
   get('/profilePage')
     .then(response => {
       if (response.ok)
@@ -314,7 +348,7 @@ function getProfilePage() {
       console.log('Error is', error);
     })
   }
-
+*/
 function logIn() {
   const Login = document.querySelector('.Body')
   const username = Login
@@ -334,9 +368,9 @@ function logIn() {
       logedInUser.username = username;
       logedInUser.id = data.id;
       logedInUser.permissions = data.permissions;
-      if (data.permissions == 'ADMIN') {
+      /*if (data.permissions == 'ADMIN') {
         getAdminPage();
-      } /*else {
+      }else {
         document
           .querySelector('.adminPage')
           .innerHTML = "<h1>Login Sucssesful!</h1>";
@@ -364,24 +398,6 @@ function signUp() {
     .value
   post('/createUser', {username, password})
 }
-
-function getAdminPage() {
-  get('/adminPage')
-    .then(response => {
-      if (response.ok)
-        return response.text();
-      }
-    )
-    .then(data => {
-      //console.log(data);
-      const admin_page = document.querySelector('.adminLists')
-      admin_page.innerHTML = data;
-      document.getElementById('deleteUserClick')
-    })
-    .catch(error => {
-      console.log('Error is', error);
-    })
-  }
 
 function deleteUser() {
   const userList = document.querySelector('.usersList')
