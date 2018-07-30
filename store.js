@@ -10,6 +10,8 @@ const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
 const homePageTemplatePath = './Templates/homePageTemplate.txt';
 const adminPageTemplatePath = './Templates/AdminPageTemplate.txt';
 const logInPageTemplatePath = './Templates/LogInPageTemplate.txt';
+const SignUpPageTemplatePath = './Templates/SignUpPageTemplate.txt';
+const ProfilePageTemplatePath = './Templates/ProfilePageTemplate.txt';
 
 module.exports = {
   saltHashPassword,
@@ -23,6 +25,22 @@ module.exports = {
     .readFile(logInPageTemplatePath)
     .then((logInPage) => {
       return logInPage.toString()
+    })
+  },
+
+  getSignUpPage(){
+    return fs
+    .readFile(SignUpPageTemplatePath)
+    .then((signUpPage) => {
+      return signUpPage.toString()
+    })
+  },
+
+  getProfilePage(){
+    return fs
+    .readFile(ProfilePageTemplatePath)
+    .then((profilePage) => {
+      return profilePage.toString()
     })
   },
 
@@ -129,7 +147,7 @@ module.exports = {
             console.log(projects);
             removeProject(projects[i])
           }
-          if (projects > 0) {
+          if (projects.length > 0) {
             return removeProject(projects[projects.length - 1]).then(() => {
               console.log("before deleting user: ");
               return knex('users')
@@ -154,7 +172,7 @@ module.exports = {
 
     //TODO: retrieveProjectSite
     retrieveProjectSite(data) {
-      console.log('retrieveProjectSite ' + JSON.stringify(data));
+      //console.log('retrieveProjectSite ' + JSON.stringify(data));
       var path = generateSitePath(data);
       return getProjectSite(path);
     }
@@ -179,7 +197,7 @@ module.exports = {
   }
 
   function removeProject(data) {
-    console.log(data);
+    //console.log(data);
     return knex('projectInvest')
       .where({project_id: data.id})
       .del()
@@ -197,7 +215,7 @@ module.exports = {
                   project_name: project['project_name']
                 }
                 var path = generateSitePath(projectData)
-                console.log("PATH: " + path);
+                //console.log("PATH: " + path);
                 return fs
                   .remove(path)
                   .then(() => {
@@ -228,7 +246,7 @@ module.exports = {
   }
 
   function generateSitePath(data) {
-    console.log(data);
+    //console.log(data);
     return `./projects/${data.user_name}/${data.project_name}.json`;
   }
 
@@ -340,7 +358,7 @@ module.exports = {
         var user_name = user['username']
         var project_name = project.project_name
         var path = generateSitePath({user_name, project_name});
-        console.log("PATH: " + path);
+        //console.log("PATH: " + path);
         return fs.
         readJson(path)
         .then((projectFile) => {

@@ -22,6 +22,20 @@ app.get('/logInPage', (req, res) => {
   })
 })
 
+app.get('/signUpPage', (req,res) => {
+  store.getSignUpPage()
+  .then(site => {
+    res.send(site);
+  })
+})
+
+app.get('/profilePage', (req,res) => {
+  store.getProfilePage()
+  .then(site => {
+    res.send(site)
+  })
+})
+
 app.post('/createUser', (req, res) => {
   store
     .createUser({

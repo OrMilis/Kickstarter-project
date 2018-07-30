@@ -4,6 +4,7 @@ var logedInUser = {
   permissions: ''
 }
 
+/*
 const CreateUser = document.querySelector('.CreateUser')
 CreateUser.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -15,7 +16,7 @@ CreateUser.addEventListener('submit', (e) => {
     .value
   post('/createUser', {username, password})
 })
-
+*/
 /*const Login = document.querySelector('.Body')
 Login.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -165,7 +166,9 @@ function getProjectPage(user_name, project_name) {
       }
     )
     .then(data => {
-      document.querySelector('.Body').innerHTML = data;
+      document
+        .querySelector('.Body')
+        .innerHTML = data;
       console.log(data);
       document
         .querySelector('.Body')
@@ -279,10 +282,43 @@ function getLoginPage() {
     })
   }
 
+function getSignUpPage() {
+  get('/signUpPage')
+    .then(response => {
+      if (response.ok)
+        return response.text()
+    })
+    .then(data => {
+      document
+        .querySelector('.Body')
+        .innerHTML = data
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+  }
+
+function getProfilePage() {
+  get('/profilePage')
+    .then(response => {
+      if (response.ok)
+        return response.text();
+      }
+    )
+    .then(data => {
+      document
+        .querySelector('.Body')
+        .innerHTML = data
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+  }
+
 function logIn() {
   const Login = document.querySelector('.Body')
   const username = Login
-.querySelector('.username')
+    .querySelector('.username')
     .value
   const password = Login
     .querySelector('.password')
@@ -300,18 +336,34 @@ function logIn() {
       logedInUser.permissions = data.permissions;
       if (data.permissions == 'ADMIN') {
         getAdminPage();
-      } else {
+      } /*else {
         document
           .querySelector('.adminPage')
           .innerHTML = "<h1>Login Sucssesful!</h1>";
-      }
-      console.log(data);
+      }*/
+      const profileTab = document.querySelector('.profileTab')
+      profileTab.style.visibility = "visible"
+      profileTab.innerHTML = logedInUser
+        .username
+        console
+        .log(data);
       console.log(logedInUser);
     })
     .catch(error => {
       console.log('Error is', error);
     })
   }
+
+function signUp() {
+  const CreateUser = document.querySelector('.Body')
+  const username = CreateUser
+    .querySelector('.username')
+    .value
+  const password = CreateUser
+    .querySelector('.password')
+    .value
+  post('/createUser', {username, password})
+}
 
 function getAdminPage() {
   get('/adminPage')
