@@ -1,6 +1,6 @@
 <div>
   <div>
-    <a>${username}</a>
+    <h1>Hello, ${username}!</h1>
   </div>
   <div>
     <div>${projects}</div>
@@ -8,7 +8,7 @@
   </div>
   <div>
     <a>Start your own projects</a>
-    <button>Become a creator</button>
+    <button onclick="becomeCreator()">Become a creator</button>
   </div>
 
 </div>

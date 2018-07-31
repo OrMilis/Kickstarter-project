@@ -301,10 +301,8 @@ function getSignUpPage() {
 function getProfilePage() {
   if (logedInUser.permissions == 'ADMIN')
     getProfilePageAsAdmin()
-  else if (logedInUser.permissions == 'CREATOR')
-    getProfilePageAsCreator()
   else
-    getProfilePageAsBacker()
+    getProfilePage()
 }
 
 function getProfilePageAsAdmin() {
@@ -318,20 +316,66 @@ function getProfilePageAsAdmin() {
       //console.log(data);
       const admin_page = document.querySelector('.Body')
       admin_page.innerHTML = data;
-      document.getElementById('deleteUserClick')
+      //document.getElementById('deleteUserClick')
     })
     .catch(error => {
       console.log('Error is', error);
     })
   }
 
-function getProfilePageAsCreator() {
-  post('/creatorPage', logedInUser)
+function getProfilePage() {
+  //console.log("app loged in user: ");
+  //console.log(logedInUser);
+  post('/profilePage', {logedInUser})
+    .then(response => {
+      if (response.ok)
+        return response.text();
+      }
+    )
+    .then(data => {
+      //console.log(data);
+      const backer_page = document.querySelector('.Body')
+      backer_page.innerHTML = data;
+    })
+    .then(() => {
+      if (logedInUser.permissions == "BACKER") {
+        const prjoectsList = document.querySelector('.projectsList')
+        prjoectsList.style.visibility = "hidden"
+
+      }
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+  }
+
+function getCreatorPage() {
+  get('/creatorPage')
+    .then(response => {
+      if (response.ok)
+        return response.text();
+      }
+    )
+    .then(data => {
+      //console.log(data);
+      const creatorPage = document.querySelector('.Body')
+      creatorPage.innerHTML = data;
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+  }
+
+function becomeCreator() {
+  const createTab = document.querySelector('.createProjectTab')
+  createTab.style.visibility = "visible"
+  put('/updatePermission', {logedInUser}).then(response => {
+    logedInUser.permissions = 'CREATOR'
+    getProfilePage()
+
+  })
 }
 
-function getProfilePageAsBacker() {
-  post('/backerPage', logedInUser)
-}
 /*
   get('/profilePage')
     .then(response => {
@@ -368,15 +412,16 @@ function logIn() {
       logedInUser.username = username;
       logedInUser.id = data.id;
       logedInUser.permissions = data.permissions;
-      /*if (data.permissions == 'ADMIN') {
-        getAdminPage();
-      }else {
-        document
-          .querySelector('.adminPage')
-          .innerHTML = "<h1>Login Sucssesful!</h1>";
-      }*/
+      const createTab = document.querySelector('.createProjectTab')
+      if (data.permissions == 'CREATOR') {
+        createTab.style.visibility = "visible"
+      } else {
+        createTab.style.visibility = "hidden"
+      }
       const profileTab = document.querySelector('.profileTab')
       profileTab.style.visibility = "visible"
+      //const loginTab = document.querySelector('.loginTab')
+      //loginTab.style.visibility = "hidden"
       profileTab.innerHTML = logedInUser
         .username
         console
@@ -439,10 +484,21 @@ function get(path) {
 }
 
 function deleteAPI(path, data) {
-  console.log(JSON.stringify(data));
+  //console.log(JSON.stringify(data));
   return window.fetch(path + "/", {
     method: 'DELETE',
     headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+}
+
+function put(path, data) {
+  return window.fetch(path, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)

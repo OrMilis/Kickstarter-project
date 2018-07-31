@@ -10,8 +10,9 @@ const projectBlockTemplatePath = './Templates/projectBlockTemplate.txt';
 const homePageTemplatePath = './Templates/homePageTemplate.txt';
 const adminPageTemplatePath = './Templates/AdminPageTemplate.txt';
 const logInPageTemplatePath = './Templates/LogInPageTemplate.txt';
-const SignUpPageTemplatePath = './Templates/SignUpPageTemplate.txt';
-const ProfilePageTemplatePath = './Templates/ProfilePageTemplate.txt';
+const signUpPageTemplatePath = './Templates/SignUpPageTemplate.txt';
+const profilePageTemplatePath = './Templates/ProfilePageTemplate.txt';
+const creatorPageTemplatePath = './Templates/CreateProjectPageTemplate.txt'
 
 module.exports = {
   saltHashPassword,
@@ -30,7 +31,7 @@ module.exports = {
 
   getSignUpPage() {
     return fs
-      .readFile(SignUpPageTemplatePath)
+      .readFile(signUpPageTemplatePath)
       .then((signUpPage) => {
         return signUpPage.toString()
       })
@@ -45,10 +46,20 @@ module.exports = {
     return genarateAdminPage();
   },
 
+  getCreatorPage() {
+    return generateCreatorPage();
+  },
+
   createUser({username, password}) {
     console.log(`Add user ${username} with password ${password}`)
     const {salt, hash} = saltHashPassword({password});
     return knex('users').insert({salt, encrypted_password: hash, username})
+  },
+
+  updatePermission(user) {
+    return knex('users')
+    .where({id:user.id})
+    .update({permissions: 'CREATOR'})
   },
 
   authenticate({username, password}) {
@@ -426,9 +437,11 @@ module.exports = {
   }
 
   function generateProfilePage(user) {
-    return knex(projects)
+    //console.log("store user: ");
+    //console.log(user);
+    return knex('projects')
       .select('project_name')
-      .where(user_id : user.id)
+      .where({user_id: user.id})
       .then((projects) => {
         var table = '<select class = "projectsList" size = "10"> ${allOptions} </select>'
         var allOptions = ''
@@ -443,31 +456,61 @@ module.exports = {
         }
         table = template(table, {allOptions})
         var projectsTable = table
+        return projectsTable
+      })
+      .then((projectsTable) => {
         return knex('projectInvest')
-        .select('project_id')
-        .where(user_id:user.id).
-        then((projectsId) => {
-          console.log(projectsId);
-          return knex('projects').select()
-          .then((allProjects) => {
-            var projectList = {}
-            for(var i = 0; i < allProjects.length; i++){
-              if(projectsId.includes(allProjects[i].id))
-                projectList.add(allProjects[i].project_name)
-            }
-            return projectsList
-          })
-          .then((projectsList) => {
-
-          }
-        })
-        return fs
-          .readFile(ProfilePageTemplatePath)
-          .then((profilePage) => {
-            profilePage = profilePage.toString()
-            profilePage = template(profilePage, {user.username, projectsTable})
-            return profilePage
+          .select('project_id')
+          .where({user_id: user.id})
+          .then((projectsId) => {
+            //console.log(projectsId);
+            return knex('projects')
+              .select()
+              .then((allProjects) => {
+                var projectsList = {}
+                for (var i = 0; i < allProjects.length; i++) {
+                  if (projectsId.includes(allProjects[i].id))
+                    projectsList.add(allProjects[i].project_name)
+                }
+                return projectsList
+              })
+              .then((projectsList) => {
+                var table = '<select class = "pledgedList" size = "10"> ${allOptions} </select>'
+                var allOptions = ''
+                var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
+                for (var i = 0; i < projectsList.length - 1; i++) {
+                  var project = projectsList[i]
+                  allOptions += template(optionFormat, {project})
+                }
+                if (projectsList.length > 0) {
+                  var project = projects[projectsList.length - 1]
+                  allOptions += template(optionFormat, {project})
+                }
+                table = template(table, {allOptions})
+                var projectsPledagedTable = table
+                return projectsPledagedTable
+              })
+              .then((projectsPledagedTable) => {
+                return fs
+                  .readFile(profilePageTemplatePath)
+                  .then((profilePage) => {
+                    profilePage = profilePage.toString()
+                    var username = user.username
+                    var projects = projectsTable
+                    var pledges = projectsPledagedTable
+                    profilePage = template(profilePage, {username, projects, pledges})
+                    return profilePage
+                  })
+              })
           })
       })
+  }
 
+  function generateCreatorPage() {
+    return fs
+      .readFile(creatorPageTemplatePath)
+      .then(creatorPage => {
+        creatorPage = creatorPage.toString()
+        return creatorPage
+      })
   }

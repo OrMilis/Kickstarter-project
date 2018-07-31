@@ -49,18 +49,32 @@ app.get('/adminPage', (req, res) => {
     })
 })
 
-app.post('/creatorPage', (req, res) => {
-  store.getProfilePage(req.body.logedInUser)
-  .then((creatorPage) => {
-    return res.send(creatorPage)
-  })
+app.post('/profilePage', (req, res) => {
+  var user = req.body.logedInUser
+  //console.log("index log in user: ");
+  //console.log(user);
+  store
+    .getProfilePage(user)
+    .then((backerPage) => {
+      return res.send(backerPage)
+    })
 })
 
-app.post('/backerPage', (req, res) => {
-  store.getProfilePage(req.body.logedInUser)
-  .then((backerPage) => {
-    return res.send(backerPage)
-  })
+app.put('/updatePermission', (req, res) => {
+  var user = req.body.logedInUser;
+  store
+    .updatePermission(user)
+    .then(() => {
+      res.sendStatus(200)
+    })
+})
+
+app.get('/creatorPage', (req, res) => {
+  store
+    .getCreatorPage()
+    .then((creatorPage) => {
+      return res.send(creatorPage)
+    })
 })
 
 app.post('/createUser', (req, res) => {
