@@ -58,8 +58,8 @@ module.exports = {
 
   updatePermission(user) {
     return knex('users')
-    .where({id:user.id})
-    .update({permissions: 'CREATOR'})
+      .where({id: user.id})
+      .update({permissions: 'CREATOR'})
   },
 
   authenticate({username, password}) {
@@ -96,23 +96,18 @@ module.exports = {
           pledged: 0
         })
         .then(() => {
-          return knex('users')
-            .where({id: data.user_id})
-            .update({permissions: values[1]})
-            .then(() => {
-              return saveAndReadSite(data);
-            })
+          return saveAndReadSite(data);
         })
     },
 
     Invest(data) { //{ user_id, project_name, }
-      console.log('Data = ', data);
-      console.log(`user id: ${data.user_id} will invest in: ${data.project_name}
-  	amount of: ${data.investment}`)
+      //  console.log('Data = ', data);
+      //  console.log(`user id: ${data.user_id} will invest in: ${data.project_name}
+      //amount of: ${data.investment}`)
       return knex('projects')
         .where({project_name: data.project_name})
         .then(([project]) => {
-          console.log(project);
+          //  console.log(project);
           var numOfBackers;
           return knex('projectInvest')
             .where({user_id: data.user_id, project_id: project.id})
@@ -132,7 +127,7 @@ module.exports = {
               }
             })
             .then(() => {
-              console.log('Project: ' + project.pledged + ' Data: ' + data.investment);
+              //    console.log('Project: ' + project.pledged + ' Data: ' + data.investment);
               return knex('projects')
                 .where({project_name: data.project_name})
                 .update({
@@ -150,14 +145,14 @@ module.exports = {
       return knex('projects')
         .where({user_id: data.user_id})
         .then((projects) => {
-          console.log("the length is: " + projects.length);
+          //  console.log("the length is: " + projects.length);
           for (var i = 0; i < projects.length - 1; i++) {
-            console.log(projects);
+            //    console.log(projects);
             removeProject(projects[i])
           }
           if (projects.length > 0) {
             return removeProject(projects[projects.length - 1]).then(() => {
-              console.log("before deleting user: ");
+              //    console.log("before deleting user: ");
               return knex('users')
                 .where({id: data.user_id})
                 .del()
@@ -272,7 +267,7 @@ module.exports = {
       .outputJson(path, data)
       .then(() => {
         return getProjectSite(path)
-        console.log('AFTER READ! ');
+        //      console.log('AFTER READ! ');
       })
       .then(file => {
         return file;
@@ -463,14 +458,18 @@ module.exports = {
           .select('project_id')
           .where({user_id: user.id})
           .then((projectsId) => {
-            //console.log(projectsId);
             return knex('projects')
               .select()
               .then((allProjects) => {
-                var projectsList = {}
+                var projectsList = []
+                var allProjectsIds = []
+                for (var i = 0; i < projectsId.length; i++) {
+                  allProjectsIds.push(projectsId[i].project_id)
+                }
                 for (var i = 0; i < allProjects.length; i++) {
-                  if (projectsId.includes(allProjects[i].id))
-                    projectsList.add(allProjects[i].project_name)
+                  if (allProjectsIds.includes(allProjects[i].id)) {
+                    projectsList.push({project_name: allProjects[i].project_name, id: allProjects[i].id})
+                  }
                 }
                 return projectsList
               })
@@ -480,14 +479,17 @@ module.exports = {
                 var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
                 for (var i = 0; i < projectsList.length - 1; i++) {
                   var project = projectsList[i]
+                  //console.log(project);
                   allOptions += template(optionFormat, {project})
                 }
                 if (projectsList.length > 0) {
-                  var project = projects[projectsList.length - 1]
+                  var project = projectsList[projectsList.length - 1]
+                  //console.log(project);
                   allOptions += template(optionFormat, {project})
                 }
                 table = template(table, {allOptions})
                 var projectsPledagedTable = table
+                //console.log(projectsPledagedTable);
                 return projectsPledagedTable
               })
               .then((projectsPledagedTable) => {

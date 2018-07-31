@@ -6,7 +6,7 @@
     <div>${projects}</div>
     <div>${pledges}</div>
   </div>
-  <div>
+  <div class="beCreator">
     <a>Start your own projects</a>
     <button onclick="becomeCreator()">Become a creator</button>
   </div>

@@ -9,7 +9,7 @@
       ${data.project_name}
     </h1>
     <p>
-      SHORT_ABSTRACT
+      ${data.project_abstract}
     </p>
   </span>
 </div>
@@ -44,7 +44,7 @@
     <div class="PledgeForm">
       <form class="Pledge">
         <input type="text" class="amount" placeholder="Pledge any amount"> <br />
-        <input type="submit" value="Back this project">
+        <button onclick="invest()">Back this projects</button>
       </form>
     </div>
   </span>

@@ -4,6 +4,10 @@ var logedInUser = {
   permissions: ''
 }
 
+var currentProject = {
+  project_name: '',
+  creator: ''
+}
 /*
 const CreateUser = document.querySelector('.CreateUser')
 CreateUser.addEventListener('submit', (e) => {
@@ -51,7 +55,7 @@ Login.addEventListener('submit', (e) => {
       console.log('Error is', error);
     })
   })*/
-
+/*
 const CreateProject = document.querySelector('.CreateProject')
 CreateProject.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -104,10 +108,67 @@ CreateProject.addEventListener('submit', (e) => {
       console.log('Error is', error);
     })
   })
+*/
+function createProject() {
+  const CreateProject = document.querySelector('.CreateProject')
+  const user_name = logedInUser.username;
+  const user_id = logedInUser.id;
+  const project_name = CreateProject
+    .querySelector('.project_name')
+    .value
+  const start_date = CreateProject
+    .querySelector('.start_date')
+    .value
+  const end_date = CreateProject
+    .querySelector('.end_date')
+    .value
+  const investment = CreateProject
+    .querySelector('.investment')
+    .value
+  const project_info = CreateProject
+    .querySelector('.project_info')
+    .value
+  const project_video = CreateProject
+    .querySelector('.project_video')
+    .value
+  const project_image = CreateProject
+    .querySelector('.project_image')
+    .value
+  const project_abstract = CreateProject
+    .querySelector('.project_abstract')
+    .value
+    post('/createProject', {
+      user_name,
+      user_id,
+      project_name,
+      start_date,
+      end_date,
+      investment,
+      project_info,
+      project_video,
+      project_image,
+      project_abstract
+    })
+    .then(response => {
+      if (response.ok)
+        return response.text();
+      }
+    )
+    .then(data => {
+      console.log(data);
+      document
+        .querySelector('.Body')
+        .innerHTML = data;
+    })
+    .catch(error => {
+      console.log('Error is', error);
+    })
+  }
 /*
 const Invest = document.querySelector('.Invest')
 Invest.addEventListener('submit', (e) => {
   e.preventDefault()
+
   const user_id = logedInUser.id;
   const project_name = Invest
     .querySelector('.project_name')
@@ -118,6 +179,15 @@ Invest.addEventListener('submit', (e) => {
   post('/Invest', {user_id, project_name, investment})
 })
 */
+function invest() {
+  const Invest = document.querySelector('.Pledge')
+  const user_id = logedInUser.id;
+  const project_name = currentProject.project_name
+  const investment = Invest
+    .querySelector('.amount')
+    .value
+  post('/Invest', {user_id, project_name, investment})
+}
 /*const Project = document.querySelector('.GetProject')
 Project.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -166,6 +236,8 @@ function getProjectPage(user_name, project_name) {
       }
     )
     .then(data => {
+      currentProject.project_name = project_name
+      currentProject.creator = user_name
       document
         .querySelector('.Body')
         .innerHTML = data;
@@ -302,7 +374,7 @@ function getProfilePage() {
   if (logedInUser.permissions == 'ADMIN')
     getProfilePageAsAdmin()
   else
-    getProfilePage()
+    getProfilePageNostAsAdmin()
 }
 
 function getProfilePageAsAdmin() {
@@ -323,7 +395,7 @@ function getProfilePageAsAdmin() {
     })
   }
 
-function getProfilePage() {
+function getProfilePageNostAsAdmin() {
   //console.log("app loged in user: ");
   //console.log(logedInUser);
   post('/profilePage', {logedInUser})
@@ -341,7 +413,9 @@ function getProfilePage() {
       if (logedInUser.permissions == "BACKER") {
         const prjoectsList = document.querySelector('.projectsList')
         prjoectsList.style.visibility = "hidden"
-
+      } else if (logedInUser.permissions == 'CREATOR') {
+        const beCreator = document.querySelector('.beCreator')
+        beCreator.style.visibility = "hidden"
       }
     })
     .catch(error => {
@@ -422,11 +496,10 @@ function logIn() {
       profileTab.style.visibility = "visible"
       //const loginTab = document.querySelector('.loginTab')
       //loginTab.style.visibility = "hidden"
-      profileTab.innerHTML = logedInUser
-        .username
-        console
-        .log(data);
+      profileTab.innerHTML = logedInUser.username;
+      console.log(data);
       console.log(logedInUser);
+      getProfilePage()
     })
     .catch(error => {
       console.log('Error is', error);

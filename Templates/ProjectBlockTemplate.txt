@@ -1,5 +1,5 @@
 <div class="grid-item">
-  <div class="project-image" href onclick="getProjectPage('${projectFile.user_name}', '${project.project_name}')">
+  <div class="project-image" href onclick="getProjectPage(`${projectFile.user_name}`, `${project.project_name}`)">
     <img src="${projectFile.project_image}" /><br /><br />
   </div>
   <div class="project-block-info">
