@@ -1,10 +1,10 @@
 <div>
   <div>
-    <a>${myName}</a>
+    <a>${username}</a>
   </div>
   <div>
-    <div>${myProjects}</div>
-    <div>${myPledges}</div>
+    <div>${projects}</div>
+    <div>${pledges}</div>
   </div>
   <div>
     <a>Start your own projects</a>

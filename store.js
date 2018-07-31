@@ -20,28 +20,25 @@ module.exports = {
     return generateHomePage();
   },
 
-  getLoginPage(){
+  getLoginPage() {
     return fs
-    .readFile(logInPageTemplatePath)
-    .then((logInPage) => {
-      return logInPage.toString()
-    })
+      .readFile(logInPageTemplatePath)
+      .then((logInPage) => {
+        return logInPage.toString()
+      })
   },
 
-  getSignUpPage(){
+  getSignUpPage() {
     return fs
-    .readFile(SignUpPageTemplatePath)
-    .then((signUpPage) => {
-      return signUpPage.toString()
-    })
+      .readFile(SignUpPageTemplatePath)
+      .then((signUpPage) => {
+        return signUpPage.toString()
+      })
   },
 
-  getProfilePage(){
-    return fs
-    .readFile(ProfilePageTemplatePath)
-    .then((profilePage) => {
-      return profilePage.toString()
-    })
+  getProfilePage(user) {
+    return generateProfilePage(user)
+
   },
 
   getAdminPage() {
@@ -302,8 +299,6 @@ module.exports = {
       })
   }
 
-
-
   function generateHomePage() {
     var allBlocks = '';
     return knex('projects')
@@ -359,19 +354,19 @@ module.exports = {
         var project_name = project.project_name
         var path = generateSitePath({user_name, project_name});
         //console.log("PATH: " + path);
-        return fs.
-        readJson(path)
-        .then((projectFile) => {
-          return fs
-            .readFile(projectBlockTemplatePath)
-            .then(block => {
-              block = block.toString();
-              var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
-              var percentage = Math.min((project.pledged / project.investment) * 100, 100);
-              percentage = Math.floor(percentage)
-              return template(block, {project, projectFile, percentage, remaining_days});
-            })
-        }) //TODO :FINISH IT!!!
+        return fs
+          .readJson(path)
+          .then((projectFile) => {
+            return fs
+              .readFile(projectBlockTemplatePath)
+              .then(block => {
+                block = block.toString();
+                var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
+                var percentage = Math.min((project.pledged / project.investment) * 100, 100);
+                percentage = Math.floor(percentage)
+                return template(block, {project, projectFile, percentage, remaining_days});
+              })
+          }) //TODO :FINISH IT!!!
       })
   }
 
@@ -428,4 +423,51 @@ module.exports = {
       table = template(table, {allOptions})
       return table
     });
+  }
+
+  function generateProfilePage(user) {
+    return knex(projects)
+      .select('project_name')
+      .where(user_id : user.id)
+      .then((projects) => {
+        var table = '<select class = "projectsList" size = "10"> ${allOptions} </select>'
+        var allOptions = ''
+        var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
+        for (var i = 0; i < projects.length - 1; i++) {
+          var project = projects[i]
+          allOptions += template(optionFormat, {project})
+        }
+        if (projects.length > 0) {
+          var project = projects[projects.length - 1]
+          allOptions += template(optionFormat, {project})
+        }
+        table = template(table, {allOptions})
+        var projectsTable = table
+        return knex('projectInvest')
+        .select('project_id')
+        .where(user_id:user.id).
+        then((projectsId) => {
+          console.log(projectsId);
+          return knex('projects').select()
+          .then((allProjects) => {
+            var projectList = {}
+            for(var i = 0; i < allProjects.length; i++){
+              if(projectsId.includes(allProjects[i].id))
+                projectList.add(allProjects[i].project_name)
+            }
+            return projectsList
+          })
+          .then((projectsList) => {
+
+          }
+        })
+        return fs
+          .readFile(ProfilePageTemplatePath)
+          .then((profilePage) => {
+            profilePage = profilePage.toString()
+            profilePage = template(profilePage, {user.username, projectsTable})
+            return profilePage
+          })
+      })
+
   }
