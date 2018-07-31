@@ -8,7 +8,7 @@
   </div>
   <div class="project-block-statistics">
     <div id="myProgress">
-      <div id="myBar" style="width: ${percentage}%"></div>
+      <div id="myBar" style="width: ${percentageWidth}%"></div>
     </div>
     <a>${project.pledged} Pledged</a><br />
     <a>${percentage}% Funded</a><br />

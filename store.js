@@ -269,9 +269,6 @@ module.exports = {
         return getProjectSite(path)
         //      console.log('AFTER READ! ');
       })
-      .then(file => {
-        return file;
-      })
       .catch(err => {
         console.error(err)
       })
@@ -327,9 +324,10 @@ module.exports = {
                 .then(([backerSum]) => {
                   backerSum = backerSum['sum(`backers`)'];
                   return knex('projects')
+                    .where('pledged', '>', knex.raw('projects.investment'))
                     .count()
-                    .where('pledged', '>', 'investment')
                     .then(([fundedProjects]) => {
+                      //console.log(fundedProjects);
                       fundedProjects = fundedProjects[`count(*)`].toString();
                       var date = new Date()
                       return knex('projects')
@@ -356,6 +354,7 @@ module.exports = {
       .select('username')
       .where({id: project.user_id})
       .then(([user]) => {
+        console.log(user);
         var user_name = user['username']
         var project_name = project.project_name
         var path = generateSitePath({user_name, project_name});
@@ -368,11 +367,11 @@ module.exports = {
               .then(block => {
                 block = block.toString();
                 var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
-                var percentage = Math.min((project.pledged / project.investment) * 100, 100);
-                percentage = Math.floor(percentage)
-                return template(block, {project, projectFile, percentage, remaining_days});
+                var percentage = Math.floor((project.pledged / project.investment) * 100)
+                var percentageWidth = Math.min(percentage, 100);
+                return template(block, {project, projectFile, percentage, percentageWidth, remaining_days});
               })
-          }) //TODO :FINISH IT!!!
+          })
       })
   }
 

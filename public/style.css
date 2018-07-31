@@ -72,6 +72,7 @@ body {
 }
 
 .Pledge button {
+  width: 100%;
   background-color: #329d60;
   border: none;
   color: #f6f6f6;

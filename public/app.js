@@ -151,9 +151,8 @@ function createProject() {
     })
     .then(response => {
       if (response.ok)
-        return response.text();
-      }
-    )
+        getProjectPage(user_name,project_name)
+      })
     .then(data => {
       console.log(data);
       document
@@ -164,6 +163,40 @@ function createProject() {
       console.log('Error is', error);
     })
   }
+
+
+function createProjectV2(){
+  const Body = document.querySelector('.Body')
+  const project_name = Body.querySelector('.project_name').value;
+  const project_abstract = Body.querySelector('.project_abstract').value;
+  const project_info = Body.querySelector('.project_info').value;
+  const start_date = Body.querySelector('.start_date').value;
+  const end_date = Body.querySelector('.end_date').value;
+  const project_video = Body.querySelector('.project_video').value;
+  const project_image = Body.querySelector('.project_image').value;
+  const investment = Body.querySelector('.investment').value;
+  post('/createProject', {
+    user_name,
+    user_id,
+    project_name,
+    project_abstract,
+    project_info,
+    start_date,
+    end_date,
+    project_video,
+    project_image,
+    investment
+  })
+  .then(response => {
+    if(response.ok)
+      return response.text()
+  })
+  .then(data => {
+    console.log(data);
+  })
+}
+
+
 /*
 const Invest = document.querySelector('.Invest')
 Invest.addEventListener('submit', (e) => {

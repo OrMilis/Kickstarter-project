@@ -9,6 +9,6 @@
     <input type="datetime-local" class="start_date" placeholder="Start date">
     <input type="datetime-local" class="end_date" placeholder="End date">
     <input type="text" class="investment" placeholder="Investment">
-    <button onclick="createProject()">Create Project</button>
+    <button onclick="createProjectV2()">Create Project</button>
   </form>
 </div>
