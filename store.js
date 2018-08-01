@@ -13,6 +13,7 @@ const logInPageTemplatePath = './Templates/LogInPageTemplate.txt';
 const signUpPageTemplatePath = './Templates/SignUpPageTemplate.txt';
 const profilePageTemplatePath = './Templates/ProfilePageTemplate.txt';
 const creatorPageTemplatePath = './Templates/CreateProjectPageTemplate.txt'
+const editProjectTemplatePath = './Templates/EditProjectTemplate.txt'
 
 module.exports = {
   saltHashPassword,
@@ -35,6 +36,19 @@ module.exports = {
       .then((signUpPage) => {
         return signUpPage.toString()
       })
+  },
+
+  getUpdatePage(data) {
+    return fs
+      .readFile(editProjectTemplatePath)
+      .then((editProjectPage) => {
+        var html = editProjectPage.toString()
+        return {html}
+      })
+  },
+
+  updateProject(data) {
+    return saveAndReadSite(data)
   },
 
   getProfilePage(user) {
@@ -166,18 +180,24 @@ module.exports = {
     },
 
     //TODO: updateProject
-    updateProject(data) {
+    /*updateProject(data) {
       var path = generateSitePath(data);
       var site = generateSiteFile(data);
       writeFile(path, site)
       return knex('project')
-    },
+    },*/
 
     //TODO: retrieveProjectSite
     retrieveProjectSite(data) {
       //console.log('retrieveProjectSite ' + JSON.stringify(data));
       var path = generateSitePath(data);
-      return getProjectSite(path);
+      return getProjectSite(path).then((html) => {
+        return fs
+          .readJson(path)
+          .then((projectData) => {
+            return {html, projectData}
+          })
+      });
     }
   }
 

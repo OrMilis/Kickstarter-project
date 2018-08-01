@@ -1,0 +1,10 @@
+<div>
+  <form class="UpdateProject">
+    <h1>Update Project</h1>
+    <input type="text" class="project_info" placeholder="project_info">
+    <input type="text" class="project_video" placeholder="project_video">
+    <input type="text" class="project_image" placeholder="project_image">
+    <input type="text" class="project_abstract" placeholder="project_abstract">
+  </form>
+  <button onclick="updateProject()">Update</button>
+</div>
