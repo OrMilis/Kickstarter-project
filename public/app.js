@@ -498,8 +498,8 @@ function getProfilePageNostAsAdmin() {
     })
   }
 
-function getuser_namePage() {
-  get('/user_namePage')
+function getCreatorPage() {
+  get('/creatorePage')
     .then(response => {
       if (response.ok)
         return response.text();
