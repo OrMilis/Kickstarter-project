@@ -53,25 +53,30 @@ body {
   height: auto;
 }
 
-.Pledge input {
+textarea {
+  width: 100%;
+  resize: none;
+}
+
+input {
   width: 100%;
 }
 
-.Pledge input[type=text] {
+textarea, input[type=text], [type=password] {
   padding: 3% 5% 3% 3%;
-  border: 2px solid #d5d5d5;
+  border: 1px solid #d5d5d5;
   font-family: Josefin Sans;
   font-size: 16px;
   box-sizing: border-box;
   margin: 2.5% 0% 3% 0%;
 }
 
-.Pledge input[type=text]:focus {
-  border: 2px solid #535353;
+textarea, input[type=text]:focus, [type=password]:focus {
+  border: 1px solid #0a7800;
   outline: none;
 }
 
-.Pledge button {
+.formButton {
   width: 100%;
   background-color: #329d60;
   border: none;
@@ -81,12 +86,12 @@ body {
   font-size: 16px;
 }
 
-.Pledge button:hover {
+.formButton:hover {
   background-color: #2b8e56;
   color: #f6f6f6;
 }
 
-.Pledge button:active {
+.formButton:active {
   background-color: #237044;
   color: #f6f6f6;
 }
@@ -101,6 +106,15 @@ body {
   display: flex;
   border-bottom: 1px solid #d4d2d2;
   border-top: 1px solid #d4d2d2;
+}
+
+.Login, .CreateUser {
+  margin: 2% 30% 2% 30%;
+  align-items: center;
+}
+
+.CreateProjectBox{
+  margin: 5% 10% 5% 10%;
 }
 
 .dataNums {

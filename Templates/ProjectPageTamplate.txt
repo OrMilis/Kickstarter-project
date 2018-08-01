@@ -44,7 +44,7 @@
     <div class="PledgeForm">
       <form class="Pledge">
         <input type="text" class="amount" placeholder="Pledge any amount"> <br />
-        <button onclick="invest()">Back this projects</button>
+        <button class="formButton" onclick="invest()">Back this projects</button>
       </form>
     </div>
   </span>

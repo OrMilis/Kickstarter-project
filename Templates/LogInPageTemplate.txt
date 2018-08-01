@@ -1,6 +1,6 @@
-<div class="CreateUser">
+<div class="Login">
   <h1>Log-In</h1>
-  <input type="text" class="username" placeholder="username">
+  <input type="text" class="username" placeholder="username"> </br>
   <input type="password" class="password" placeholder="password">
-  <input type="submit" value="Login" onclick="logIn()">
+  <button class="formButton" onclick="logIn()">Log in</button>
 </div>
