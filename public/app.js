@@ -499,7 +499,7 @@ function getProfilePageNostAsAdmin() {
   }
 
 function getCreatorPage() {
-  get('/creatorPage')
+  get('/creatorePage')
     .then(response => {
       if (response.ok)
         return response.text();
