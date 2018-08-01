@@ -151,8 +151,8 @@ function createProject() {
     })
     .then(response => {
       if (response.ok)
-        getProjectPage(user_name,project_name)
-      })
+        getProjectPage(user_name, project_name)
+    })
     .then(data => {
       console.log(data);
       document
@@ -164,17 +164,32 @@ function createProject() {
     })
   }
 
-
-function createProjectV2(){
+function createProjectV2() {
   const Body = document.querySelector('.Body')
-  const project_name = Body.querySelector('.project_name').value;
-  const project_abstract = Body.querySelector('.project_abstract').value;
-  const project_info = Body.querySelector('.project_info').value;
-  const start_date = Body.querySelector('.start_date').value;
-  const end_date = Body.querySelector('.end_date').value;
-  const project_video = Body.querySelector('.project_video').value;
-  const project_image = Body.querySelector('.project_image').value;
-  const investment = Body.querySelector('.investment').value;
+  const project_name = Body
+    .querySelector('.project_name')
+    .value;
+  const project_abstract = Body
+    .querySelector('.project_abstract')
+    .value;
+  const project_info = Body
+    .querySelector('.project_info')
+    .value;
+  const start_date = Body
+    .querySelector('.start_date')
+    .value;
+  const end_date = Body
+    .querySelector('.end_date')
+    .value;
+  const project_video = Body
+    .querySelector('.project_video')
+    .value;
+  const project_image = Body
+    .querySelector('.project_image')
+    .value;
+  const investment = Body
+    .querySelector('.investment')
+    .value;
   post('/createProject', {
     user_name,
     user_id,
@@ -187,15 +202,14 @@ function createProjectV2(){
     project_image,
     investment
   })
-  .then(response => {
-    if(response.ok)
-      return response.text()
-  })
-  .then(data => {
-    console.log(data);
-  })
+    .then(response => {
+      if (response.ok)
+        return response.text()
+    })
+    .then(data => {
+      console.log(data);
+    })
 }
-
 
 /*
 const Invest = document.querySelector('.Invest')
@@ -278,12 +292,21 @@ function getProjectPage(user_name, project_name) {
       document
         .querySelector('.Body')
         .innerHTML = data;
+      editProject = document.querySelector('.editProject')
+      if (logedInUser.username === user_name) {
+        editProject.style.visibility = "visible"
+      }
     })
     .catch(error => {
       console.log('Error is', error);
     })
   }
 
+function closeProjectPage() {
+  editProject = document.querySelector('.editProject')
+  editProject.style.visibility = "hidden"
+}
+function editProject() {}
 /*const find = document.querySelector('.TestFind')
 find.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -365,6 +388,7 @@ function getHomepage() {
       document
         .querySelector('.Body')
         .innerHTML = data;
+        closeProjectPage()
     })
     .catch(error => {
       console.log('Error is', error);
@@ -381,6 +405,7 @@ function getLoginPage() {
       document
         .querySelector('.Body')
         .innerHTML = data;
+        closeProjectPage()
     })
     .catch(error => {
       console.log('Error is', error)
@@ -397,6 +422,7 @@ function getSignUpPage() {
       document
         .querySelector('.Body')
         .innerHTML = data
+        closeProjectPage()
     })
     .catch(error => {
       console.log('Error is', error);
@@ -404,6 +430,7 @@ function getSignUpPage() {
   }
 
 function getProfilePage() {
+  closeProjectPage()
   if (logedInUser.permissions == 'ADMIN')
     getProfilePageAsAdmin()
   else
@@ -467,6 +494,7 @@ function getCreatorPage() {
       //console.log(data);
       const creatorPage = document.querySelector('.Body')
       creatorPage.innerHTML = data;
+      closeProjectPage()
     })
     .catch(error => {
       console.log('Error is', error);

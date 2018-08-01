@@ -354,7 +354,7 @@ module.exports = {
       .select('username')
       .where({id: project.user_id})
       .then(([user]) => {
-        console.log(user);
+        //console.log(user);
         var user_name = user['username']
         var project_name = project.project_name
         var path = generateSitePath({user_name, project_name});
