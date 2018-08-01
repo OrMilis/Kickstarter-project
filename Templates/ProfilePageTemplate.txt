@@ -3,7 +3,9 @@
     <h1>Hello, ${username}!</h1>
   </div>
   <div>
-    <div>${projects}</div>
+    <div>${projects}
+    <button onclick="getAllBackers()">Get all backers</button>
+    </div>
     <div>${pledges}</div>
   </div>
   <div class="beCreator">

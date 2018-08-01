@@ -49,6 +49,18 @@ app.get('/adminPage', (req, res) => {
     })
 })
 
+app.post('/getUpdatePage', (req, res) => {
+  var user_name = req.body.user_name
+  var project_name = req
+    .body
+    .project_name
+    store
+    .getUpdatePage({user_name, project_name})
+    .then((updatePage) => {
+      return res.send(updatePage)
+    })
+})
+
 app.post('/profilePage', (req, res) => {
   var user = req.body.logedInUser
   //console.log("index log in user: ");
@@ -108,6 +120,15 @@ app.post('/Invest', (req, res) => {
     .then(() => res.sendStatus(200))
 })
 
+//TODO: updateProject
+app.post('/updateProject', (req, res) => {
+  store
+    .updateProject(req.body)
+    .then((site) => {
+      res.send(site)
+    })
+})
+
 //TODO: findAllProjects
 //app.get('/findAllProjects', (req, res) => {
 //  store.findAllProjects()
@@ -146,14 +167,12 @@ app.delete('/removeUser', (req, res) => {
     })
 })
 
-//TODO: updateProject
-
 //TODO: getProjectSite
 app.post('/project', (req, res) => {
   store
     .retrieveProjectSite({user_name: req.body.user_name, project_name: req.body.project_name})
-    .then(site => {
-      return res.send(site);
+    .then(data => {
+      return res.send(data);
     })
 })
 
