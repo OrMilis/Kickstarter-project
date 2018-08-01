@@ -1,6 +1,11 @@
 <div class="adminTables">
   ${adminTables}
   <div>
+    <span class="backersList"></span>
+    <button onclick="getAllBackers()">Get all backers</button>
+  </div>
+
+  <div>
     <button onclick="deleteUser();" id="deleteUserClick">delete user</button>
     <button onclick="deleteProject();" id="deleteProjectClick">delete Project</button>
   </div>

@@ -148,6 +148,16 @@ app.get('/findAllProjects', (req, res) => {
     })
 })
 
+app.post('/getAllBackers', (req, res) => {
+  var id =req.body.id
+  store
+    .getAllBackers(id)
+    .then((data) => {
+      res.send(data)
+    })
+
+})
+
 //TODO: removeProject
 app.delete('/removeProject', (req, res) => {
   store

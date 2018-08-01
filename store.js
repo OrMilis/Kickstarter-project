@@ -47,6 +47,10 @@ module.exports = {
       })
   },
 
+  getAllBackers(id) {
+    return generateBackersTable(id)
+  },
+
   updateProject(data) {
     return saveAndReadSite(data)
   },
@@ -130,7 +134,8 @@ module.exports = {
                 numOfBackers = project.backers;
                 return knex('projectInvest').update({
                   amount: investment.amount += parseInt(data.investment)
-                })
+
+                }).where({user_id: data.user_id})
               } else {
                 numOfBackers = ++project.backers;
                 return knex('projectInvest').insert({
@@ -454,7 +459,7 @@ module.exports = {
     //console.log("store user: ");
     //console.log(user);
     return knex('projects')
-      .select('project_name')
+      .select()
       .where({user_id: user.id})
       .then((projects) => {
         var table = '<select class = "projectsList" size = "10"> ${allOptions} </select>'
@@ -462,6 +467,7 @@ module.exports = {
         var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
         for (var i = 0; i < projects.length - 1; i++) {
           var project = projects[i]
+          //console.log(project);
           allOptions += template(optionFormat, {project})
         }
         if (projects.length > 0) {
@@ -523,6 +529,43 @@ module.exports = {
                     return profilePage
                   })
               })
+          })
+      })
+  }
+
+  function generateBackersTable(id) {
+    return knex('projectInvest')
+      .select('user_id')
+      .where({project_id : id})
+      .then((usersIdList) => {
+        return knex('users')
+          .select()
+          .then((allUsers) => {
+            var allUsersList = []
+            var allUsersIds = []
+            for (var i = 0; i < usersIdList.length; i++) {
+              allUsersIds.push(usersIdList[i].user_id)
+            }
+            for (var i = 0; i < allUsers.length; i++) {
+              if (allUsersIds.includes(allUsers[i].id)) {
+                allUsersList.push({user_name: allUsers[i].username})
+              }
+            }
+            var table = '<select class = "backersList" size = "10"> ${allOptions} </select>'
+            var allOptions = ''
+            var optionFormat = '<option disabled>${user.user_name}</option>'
+            for (var i = 0; i < allUsersList.length - 1; i++) {
+              var user = allUsersList[i]
+              //console.log(project);
+              allOptions += template(optionFormat, {user})
+            }
+            if (allUsersList.length > 0) {
+              var user = allUsersList[allUsersList.length - 1]
+              //console.log(project);
+              allOptions += template(optionFormat, {user})
+            }
+            table = template(table, {allOptions})
+            return table
           })
       })
   }

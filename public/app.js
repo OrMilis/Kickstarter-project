@@ -250,7 +250,9 @@ function invest() {
   const investment = Invest
     .querySelector('.amount')
     .value
-  post('/Invest', {user_id, project_name, investment})
+  post('/Invest', {user_id, project_name, investment}).then(() => {
+    getProjectPage(currentProject.user_name,currentProject.project_name)
+  })
 }
 /*const Project = document.querySelector('.GetProject')
 Project.addEventListener('submit', (e) => {
@@ -499,7 +501,7 @@ function getProfilePageNostAsAdmin() {
   }
 
 function getCreatorPage() {
-  get('/creatorePage')
+  get('/creatorPage')
     .then(response => {
       if (response.ok)
         return response.text();
@@ -595,11 +597,29 @@ function signUp() {
 
 function deleteUser() {
   const userList = document.querySelector('.usersList')
-  console.log(userList.value);
+  //console.log(userList.value);
   var user_id = userList
     .value
     this
     .deleteAPI('/removeUser', {user_id})
+}
+
+function getAllBackers() {
+  const backersList = document.querySelector('.backersList')
+  const projectList = document.querySelector('.projectsList')
+  var id = projectList
+    .value
+    console
+    .log(id);
+  post('/getAllBackers', {id})
+    .then((response) => {
+      if (response.ok)
+        return response.text();
+      }
+    )
+    .then((data) => {
+      backersList.innerHTML = data
+    })
 }
 
 function deleteProject() {
