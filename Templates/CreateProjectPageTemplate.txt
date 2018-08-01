@@ -1,14 +1,14 @@
 <div>
   <form class="CreateProject">
     <h1>Create Project</h1>
-    <input type="text" class="project_name" placeholder="Project name">
-    <input type="text" class="project_abstract" placeholder="Project abstract">
-    <input type="text" class="project_info" placeholder="Project info">
-    <input type="text" class="project_video" placeholder="Project video">
-    <input type="text" class="project_image" placeholder="Project image">
-    <input type="datetime-local" class="start_date" placeholder="Start date">
-    <input type="datetime-local" class="end_date" placeholder="End date">
-    <input type="text" class="investment" placeholder="Investment">
-    <button onclick="createProjectV2()">Create Project</button>
+    <input type="text" class="project_name" placeholder="project_name">
+    <input type="datetime-local" class="start_date" placeholder="start_date">
+    <input type="datetime-local" class="end_date" placeholder="end_date">
+    <input type="text" class="investment" placeholder="investment">
+    <input type="text" class="project_info" placeholder="project_info">
+    <input type="text" class="project_video" placeholder="project_video">
+    <input type="text" class="project_image" placeholder="project_image">
+    <input type="text" class="project_abstract" placeholder="project_abstract">
   </form>
+  <button onclick="createProject()">Create</button>
 </div>
