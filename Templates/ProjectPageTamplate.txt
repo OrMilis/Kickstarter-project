@@ -44,8 +44,12 @@
     <div class="PledgeForm">
       <form class="Pledge">
         <input type="text" class="amount" placeholder="Pledge any amount"> <br />
+<<<<<<< HEAD
         <button class="formButton" onclick="invest()">Back this projects</button>
+=======
+>>>>>>> 6415828d2939cb265d297daa468ad31522706868
       </form>
+        <button class="formButton" onclick="invest()">Back this projects</button>
     </div>
   </span>
 </div>
