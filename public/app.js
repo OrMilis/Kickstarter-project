@@ -507,8 +507,8 @@ function getCreatorPage() {
     )
     .then(data => {
       //console.log(data);
-      const user_namePage = document.querySelector('.Body')
-      user_namePage.innerHTML = data;
+      const creatorPage = document.querySelector('.Body')
+      creatorPage.innerHTML = data;
       closeProjectPage()
     })
     .catch(error => {
@@ -516,7 +516,7 @@ function getCreatorPage() {
     })
   }
 
-function becomeuser_name() {
+function becomeCreator() {
   const createTab = document.querySelector('.createProjectTab')
   createTab.style.visibility = "visible"
   put('/updatePermission', {logedInUser}).then(response => {
