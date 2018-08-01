@@ -55,8 +55,8 @@ Login.addEventListener('submit', (e) => {
       console.log('Error is', error);
     })
   })*/
-/*
-const CreateProject = document.querySelector('.CreateProject')
+
+/*const CreateProject = document.querySelector('.CreateProject')
 CreateProject.addEventListener('submit', (e) => {
   e.preventDefault()
   const user_name = logedInUser.username;
@@ -107,109 +107,63 @@ CreateProject.addEventListener('submit', (e) => {
     .catch(error => {
       console.log('Error is', error);
     })
-  })
-*/
-function createProject() {
-  const CreateProject = document.querySelector('.CreateProject')
-  const user_name = logedInUser.username;
-  const user_id = logedInUser.id;
-  const project_name = CreateProject
-    .querySelector('.project_name')
-    .value
-  const start_date = CreateProject
-    .querySelector('.start_date')
-    .value
-  const end_date = CreateProject
-    .querySelector('.end_date')
-    .value
-  const investment = CreateProject
-    .querySelector('.investment')
-    .value
-  const project_info = CreateProject
-    .querySelector('.project_info')
-    .value
-  const project_video = CreateProject
-    .querySelector('.project_video')
-    .value
-  const project_image = CreateProject
-    .querySelector('.project_image')
-    .value
-  const project_abstract = CreateProject
-    .querySelector('.project_abstract')
-    .value
-    post('/createProject', {
-      user_name,
-      user_id,
-      project_name,
-      start_date,
-      end_date,
-      investment,
-      project_info,
-      project_video,
-      project_image,
-      project_abstract
-    })
-    .then(response => {
-      if (response.ok)
-        getProjectPage(user_name, project_name)
-    })
-    .then(data => {
-      console.log(data);
-      document
-        .querySelector('.Body')
-        .innerHTML = data;
-    })
-    .catch(error => {
-      console.log('Error is', error);
-    })
-  }
+  })*/
 
-function createProjectV2() {
-  const Body = document.querySelector('.Body')
-  const project_name = Body
-    .querySelector('.project_name')
-    .value;
-  const project_abstract = Body
-    .querySelector('.project_abstract')
-    .value;
-  const project_info = Body
-    .querySelector('.project_info')
-    .value;
-  const start_date = Body
-    .querySelector('.start_date')
-    .value;
-  const end_date = Body
-    .querySelector('.end_date')
-    .value;
-  const project_video = Body
-    .querySelector('.project_video')
-    .value;
-  const project_image = Body
-    .querySelector('.project_image')
-    .value;
-  const investment = Body
-    .querySelector('.investment')
-    .value;
-  post('/createProject', {
-    user_name,
-    user_id,
-    project_name,
-    project_abstract,
-    project_info,
-    start_date,
-    end_date,
-    project_video,
-    project_image,
-    investment
-  })
-    .then(response => {
-      if (response.ok)
-        return response.text()
-    })
-    .then(data => {
-      console.log(data);
-    })
-}
+  function createProject(){
+    const CreateProject = document.querySelector('.CreateProject')
+    const user_name = logedInUser.username;
+    const user_id = logedInUser.id;
+    const project_name = CreateProject
+      .querySelector('.project_name')
+      .value
+    const start_date = CreateProject
+      .querySelector('.start_date')
+      .value
+    const end_date = CreateProject
+      .querySelector('.end_date')
+      .value
+    const investment = CreateProject
+      .querySelector('.investment')
+      .value
+    const project_info = CreateProject
+      .querySelector('.project_info')
+      .value
+    const project_video = CreateProject
+      .querySelector('.project_video')
+      .value
+    const project_image = CreateProject
+      .querySelector('.project_image')
+      .value
+      const project_abstract = CreateProject
+        .querySelector('.project_abstract')
+        .value
+      post('/CreateProject', {
+        user_name,
+        user_id,
+        project_name,
+        start_date,
+        end_date,
+        investment,
+        project_info,
+        project_video,
+        project_image,
+        project_abstract
+      })
+      .then(response => {
+        if (response.ok)
+          return response.text();
+        }
+      )
+      .then(data => {
+        console.log(data);
+        document
+          .querySelector('.Body')
+          .innerHTML = data;
+      })
+      .catch(error => {
+        console.log('Error is', error);
+      })
+  }
 
 /*
 const Invest = document.querySelector('.Invest')
@@ -306,6 +260,7 @@ function closeProjectPage() {
   editProject = document.querySelector('.editProject')
   editProject.style.visibility = "hidden"
 }
+
 function editProject() {}
 /*const find = document.querySelector('.TestFind')
 find.addEventListener('submit', (e) => {
