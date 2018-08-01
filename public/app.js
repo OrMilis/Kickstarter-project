@@ -498,8 +498,8 @@ function getProfilePageNostAsAdmin() {
     })
   }
 
-function getCreatorPage() {
-  get('/creatorPage')
+function getuser_namePage() {
+  get('/user_namePage')
     .then(response => {
       if (response.ok)
         return response.text();
@@ -507,8 +507,8 @@ function getCreatorPage() {
     )
     .then(data => {
       //console.log(data);
-      const creatorPage = document.querySelector('.Body')
-      creatorPage.innerHTML = data;
+      const user_namePage = document.querySelector('.Body')
+      user_namePage.innerHTML = data;
       closeProjectPage()
     })
     .catch(error => {
@@ -516,7 +516,7 @@ function getCreatorPage() {
     })
   }
 
-function becomeCreator() {
+function becomeuser_name() {
   const createTab = document.querySelector('.createProjectTab')
   createTab.style.visibility = "visible"
   put('/updatePermission', {logedInUser}).then(response => {
