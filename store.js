@@ -132,10 +132,12 @@ module.exports = {
             .then(([investment]) => {
               if (investment) {
                 numOfBackers = project.backers;
-                return knex('projectInvest').update({
-                  amount: investment.amount += parseInt(data.investment)
+                return knex('projectInvest')
+                  .update({
+                    amount: investment.amount += parseInt(data.investment)
 
-                }).where({user_id: data.user_id})
+                  })
+                  .where({user_id: data.user_id})
               } else {
                 numOfBackers = ++project.backers;
                 return knex('projectInvest').insert({
@@ -299,11 +301,11 @@ module.exports = {
       })
     }
 
-  function calculateDays(start_date, end_date) {
-    start_date = Date.parse(start_date);
+  function calculateDays(end_date) {
+    var today = new Date()
     end_date = Date.parse(end_date);
 
-    return (end_date - start_date) / (1000 * 60 * 60 * 24);
+    return (end_date - today) / (1000 * 60 * 60 * 24);
   }
 
   function generateSiteFile(data) {
@@ -314,14 +316,24 @@ module.exports = {
         return knex('projects')
           .where({project_name: data.project_name})
           .then(([project]) => {
-            var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
+            var remaining_days = Math.floor(calculateDays(project.end_date))
             return fs
               .readFile(projectPagetemplatePath)
               .then(site => {
                 site = site.toString();
                 var percentage = Math.min((project.pledged / project.investment) * 100, 100);
                 percentage = Math.floor(percentage)
-                return template(site, {data, count, project, percentage, remaining_days});
+                var visible = remaining_days > 0
+                  ? "visible"
+                  : "hidden"
+                return template(site, {
+                  data,
+                  count,
+                  project,
+                  percentage,
+                  remaining_days,
+                  visible
+                });
               })
           })
       })
@@ -355,9 +367,10 @@ module.exports = {
                       //console.log(fundedProjects);
                       fundedProjects = fundedProjects[`count(*)`].toString();
                       var date = new Date()
+                      console.log(date);
                       return knex('projects')
                         .count()
-                        .where(date, '<', 'end_date')
+                        .where('end_date', '>', date)
                         .then(([liveProjects]) => {
                           liveProjects = liveProjects[`count(*)`].toString();
                           return fs
@@ -391,10 +404,20 @@ module.exports = {
               .readFile(projectBlockTemplatePath)
               .then(block => {
                 block = block.toString();
-                var remaining_days = Math.floor(calculateDays(project.start_date, project.end_date))
+                var remaining_days = Math.floor(calculateDays(project.end_date))
                 var percentage = Math.floor((project.pledged / project.investment) * 100)
                 var percentageWidth = Math.min(percentage, 100);
-                return template(block, {project, projectFile, percentage, percentageWidth, remaining_days});
+                var visible = remaining_days > 0
+                  ? "visible"
+                  : "hidden"
+                return template(block, {
+                  project,
+                  projectFile,
+                  percentage,
+                  percentageWidth,
+                  remaining_days,
+                  visible
+                });
               })
           })
       })
@@ -536,7 +559,7 @@ module.exports = {
   function generateBackersTable(id) {
     return knex('projectInvest')
       .select('user_id')
-      .where({project_id : id})
+      .where({project_id: id})
       .then((usersIdList) => {
         return knex('users')
           .select()

@@ -8,6 +8,7 @@ const app = express()
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
+
 app.get('/homepage', (req, res) => {
   store
     .getHomePage()
@@ -155,7 +156,6 @@ app.post('/getAllBackers', (req, res) => {
     .then((data) => {
       res.send(data)
     })
-
 })
 
 //TODO: removeProject

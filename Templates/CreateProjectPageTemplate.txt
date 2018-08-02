@@ -9,6 +9,15 @@
     <input type="text" class="project_video" placeholder="project_video">
     <input type="text" class="project_image" placeholder="project_image">
     <input type="text" class="project_abstract" placeholder="project_abstract">
+
+    <h1 class="text-center">Upload an image!</h1>
+    <form class="upload_images">
+      <div class="upload_file">
+        <input type="file" id="image_0" />
+      </div>
+    </form>
+    </br>
   </form>
+  <input type="submit" class="formButton" onclick="addAnotherFile()" value="Add Image" />
   <button class="formButton" onclick="createProject()">Create</button>
 </div>
