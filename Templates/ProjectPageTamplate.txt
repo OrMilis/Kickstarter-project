@@ -54,7 +54,7 @@
   <p>
     ${data.project_info}
   </p>
-  <span class="picture">
-    <img src="${data.project_image}" alt="projcet pic" width="400" height="400">
+  <span class="pictures">
+      ${images}
   </span>
 </div>

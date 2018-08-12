@@ -12,7 +12,7 @@
     <h1 class="text-center">Upload an image!</h1>
     <form class="upload_images">
       <div class="upload_file">
-        <input type="file" class="project_image" />
+        
       </div>
     </form>
     </br>

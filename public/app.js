@@ -123,7 +123,7 @@ function getBase64(file) {
     var reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = () => resolve(reader.result)
-    reader.onerror = error => reject (error)
+    reader.onerror = error => reject(error)
   });
 }
 
@@ -149,70 +149,70 @@ function createProject() {
   const project_video = CreateProject
     .querySelector('.project_video')
     .value
-  var project_images = CreateProject
-    .querySelector('.project_image')
+  var project_images = CreateProject.getElementsByClassName('project_images') //querySelector('.project_images')
+  console.log(project_images.length);
   var project_images_data = []
+  var upload_promises = []
+  for (var i = 0; i < project_images.length; i++) {
+    upload_promises.push(getBase64(project_images[i].files[0]))
+  }
+  console.log("upload: " + upload_promises.length);
+  Promise
+    .all(upload_promises)
+    .then(imagesData => {
+      //image = LZString.compress(image)
+      project_images_data = imagesData;
 
-  getBase64(project_images.files[0])
-  .then(image => {
-    image = LZString.compressToUint8Array(image)
-    project_images_data.push(image);
+      console.log(project_images_data.length);
+      //console.log(JSON.stringify(project_images_data));
 
-    console.log(image);
-    /*for (var i = 0; i < project_images.length-1; i++) {
-      project_images_data.push(getBase64(project_images[i].files[0]))
-    }
-    project_images_data.push(getBase64(project_images[project_images.length-1]))*/
+      const project_abstract = CreateProject
+        .querySelector('.project_abstract')
+        .value;
+      //project_image = projectImageData.toString();
+      //console.log(btoa(project_image.toString()));
 
-    console.log(JSON.stringify(project_images_data));
-
-    const project_abstract = CreateProject
-      .querySelector('.project_abstract')
-      .value;
-    //project_image = projectImageData.toString();
-    //console.log(btoa(project_image.toString()));
-
-    //console.log(JSON.stringify(project_image));
-    /*const new_image = document
+      //console.log(JSON.stringify(project_image));
+      /*const new_image = document
         .getElementById('image_0')
         .files[0]*/
-    console.log({
-      user_name,
-      user_id,
-      project_name,
-      start_date,
-      end_date,
-      investment,
-      project_info,
-      project_video,
-      project_images_data,
-      project_abstract
-    });
-    post('/CreateProject', {
-      user_name,
-      user_id,
-      project_name,
-      start_date,
-      end_date,
-      investment,
-      project_info,
-      project_video,
-      project_images_data,
-      project_abstract
-    })
-      .then(response => {
-        if (response.ok)
-          return response.text();
-        }
-      )
-      .then(data => {
-        getProjectPage(user_name, project_name)
+      console.log({
+        user_name,
+        user_id,
+        project_name,
+        start_date,
+        end_date,
+        investment,
+        project_info,
+        project_video,
+        project_images_data,
+        project_abstract
+      });
+      post('/CreateProject', {
+        user_name,
+        user_id,
+        project_name,
+        start_date,
+        end_date,
+        investment,
+        project_info,
+        project_video,
+        project_images_data,
+        project_abstract
       })
-      .catch(error => {
-        console.log('Error is', error);
+        .then(response => {
+          if (response.ok)
+            return response.text();
+          }
+        )
+        .then(data => {
+          getProjectPage(user_name, project_name)
+        })
+        .catch(error => {
+          console.log('Error is', error);
+        })
       })
-  })
-  }
+}
 
 function updateProject() {
   const UpdateProject = document.querySelector('.UpdateProject')
@@ -681,10 +681,12 @@ function deleteProject() {
 function addAnotherFile() {
   var upload_file = document.querySelector('.upload_file')
   var input = document.createElement("input")
-  input.type = "file"
-  input.class = "project_images";
+  input.type = "file";
+  input
+    .classList
+    .add("project_images");
   upload_file.appendChild(input)
-  //console.log('fuck me');
+
 }
 
 function post(path, data) {

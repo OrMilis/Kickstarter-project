@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const knex = require('knex')(require('./knexfile'))
 const fs = require('fs-extra')
 const template = require('es6-template-strings')
+const LZString = require('./public/lz-string.js')
 const values = ['BACKER', 'CREATOR', 'ADMIN'];
 
 const projectPagetemplatePath = './Templates/ProjectPageTamplate.txt';
@@ -325,11 +326,13 @@ module.exports = {
                 percentage = Math.floor(percentage)
                 var visible = remaining_days > 0
                   ? "visible"
-                  : "hidden"
+                  : "hidden";
+                var images = generatePicturesBlock(data.project_images_data)
                 return template(site, {
                   data,
                   count,
                   project,
+                  images,
                   percentage,
                   remaining_days,
                   visible
@@ -600,4 +603,15 @@ module.exports = {
         creatorPage = creatorPage.toString()
         return creatorPage
       })
+  }
+
+  function generatePicturesBlock(imagesData) {
+    var imageTemplate = '<img src="${image}" alt="projcet pic" width="400" height="400">'
+    var imageBlock = ""
+    for (var i = 0; i < imagesData.length; i++) {
+      var image = imagesData[i]
+      imageBlock += template(imageTemplate, {image});
+      console.log(imageBlock);
+    }
+    return imageBlock
   }

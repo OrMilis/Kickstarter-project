@@ -5,8 +5,10 @@ const store = require('./store')
 
 const app = express()
 
+
+
 app.use(express.static('public'))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit:'50mb'}))
 
 
 app.get('/homepage', (req, res) => {
