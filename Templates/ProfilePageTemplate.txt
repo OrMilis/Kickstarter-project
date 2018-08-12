@@ -1,17 +1,22 @@
-<div>
+<div class="profilePage">
   <div>
     <h1>Hello, ${username}!</h1>
   </div>
-  <div>
-    <div>${projects}
-    <button onclick="getAllBackers()">Get all backers</button>
+  <div class="profilePageBody">
+    <div class="profileProjectList">
+      <h2>Projects created</h2>
+      <div>${projects}</div>
+      <button class="formButton" onclick="getAllBackers()">Get all backers</button>
     </div>
-    <div>${pledges}</div>
-    <span class="backersList"></span>
+    <div class="profilePledgeList">
+      <h2>Pledged projects</h2>
+      <div>${pledges}</div>
+    </div>
   </div>
+  <div class="backersList"></div>
   <div class="beCreator">
     <a>Start your own projects</a>
-    <button onclick="becomeCreator()">Become a creator</button>
+    <button class="formButton" onclick="becomeCreator()">Become a creator</button>
   </div>
 
 </div>

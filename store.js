@@ -485,7 +485,7 @@ module.exports = {
       .select()
       .where({user_id: user.id})
       .then((projects) => {
-        var table = '<select class = "projectsList" size = "10"> ${allOptions} </select>'
+        var table = '<select class = "projectsList" size="10"> ${allOptions} </select>'
         var allOptions = ''
         var optionFormat = '<option value = ${project.id} >${project.project_name}</option>'
         for (var i = 0; i < projects.length - 1; i++) {
