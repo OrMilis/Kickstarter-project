@@ -12,6 +12,6 @@
     </div>
     <a>${project.pledged} Pledged</a><br />
     <a>${percentage}% Funded</a><br />
-    <a>${remaining_days} Time to go</a><br />
+    <a  style="visibility:${visible}">${remaining_days} Time to go</a><br />
   </div>
 </div>

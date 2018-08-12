@@ -35,13 +35,13 @@
         <a>backers</a>
       </p>
     </div>
-    <div>
+    <div style="visibility:${visible}">
       <p>
         <a class="dataNums">${remaining_days}</a> <br/>
         <a>days to go</a>
       </p>
     </div>
-    <div class="PledgeForm">
+    <div class="PledgeForm" style="visibility:${visible}">
       <form class="Pledge">
         <input type="text" class="amount" placeholder="Pledge any amount"> <br />
       </form>
