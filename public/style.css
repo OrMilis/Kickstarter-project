@@ -122,6 +122,62 @@ textarea, input[type=text]:focus, [type=password]:focus {
   color: #329d60;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  background: #ffffff;
+  background-image: none;
+  border: 1px solid #025906;
+}
+
+select {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0 0 0 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.profilePage{
+  align-items: center;
+  padding: 2% 5% 5% 5%;
+}
+
+.profilePageBody {
+  display: flex;
+  align-items: center;
+}
+
+.profileProjectList {
+  width: 50%;
+  padding: 2%;
+  margin-bottom: 1%;
+}
+
+.profilePledgeList {
+  width: 50%;
+  padding: 2%;
+}
+
+option{
+  color: #666666;
+  font-size: 18px;
+  padding: 1%;
+}
+
+select[multiple]:focus, option:checked {
+  background: linear-gradient(90deg, #329d60 0%, #ffffff 95%);
+}
+
+option:hover {
+  background-color: #c6e7cc;
+}
+
 .info {
   padding: 1.5% 3% 1.5% 3%;
 }
@@ -189,7 +245,7 @@ p {
 
 .grid-container {
   display: grid;
-  grid-gap: 2.5% 2.5%;
+  grid-gap: 2.5em;
   grid-template-columns: auto auto auto;
   padding: 2.5%;
 }
@@ -269,6 +325,23 @@ p {
     border-top: none;
 }
 /*Global*/
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #3b6737;
+}
 
 /*Fonts*/
 
