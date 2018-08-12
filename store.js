@@ -407,6 +407,7 @@ module.exports = {
               .readFile(projectBlockTemplatePath)
               .then(block => {
                 block = block.toString();
+                var blockImage = projectFile.project_images_data[0]
                 var remaining_days = Math.floor(calculateDays(project.end_date))
                 var percentage = Math.floor((project.pledged / project.investment) * 100)
                 var percentageWidth = Math.min(percentage, 100);
@@ -416,6 +417,7 @@ module.exports = {
                 return template(block, {
                   project,
                   projectFile,
+                  blockImage,
                   percentage,
                   percentageWidth,
                   remaining_days,
