@@ -125,11 +125,6 @@ function getBase64(file) {
     reader.onload = () => resolve(reader.result)
     reader.onerror = error => reject (error)
   });
-
-
-  /* return new Promise((resolve, rejecet) => {
-
-}) */
 }
 
 function createProject() {
@@ -156,66 +151,67 @@ function createProject() {
     .value
   var project_images = CreateProject
     .querySelector('.project_image')
-  var project_images_data = {}
-  for (var i = 0; i < project_images.length-1; i++) {
-    project_images_data.push(getBase64(project_images[i].files[0]))
-  }
-  project_images_data.push(getBase64(project_images[project_images.length-1]))
+  var project_images_data = []
 
-  console.log(JSON.stringify(project_images_data));
-  /*document
-    .getElementById('image_0')
-    .files[0]*/
-  //
-  const project_abstract = CreateProject
-    .querySelector('.project_abstract')
-    .value;
-  //project_image = projectImageData.toString();
-  //console.log(btoa(project_image.toString()));
+  getBase64(project_images.files[0])
+  .then(image => {
+    image = LZString.compressToUint8Array(image)
+    project_images_data.push(image);
 
-  //console.log(JSON.stringify(project_image));
-  /*const new_image = document
-      .getElementById('image_0')
-      .files[0]*/
-  console.log({
-    user_name,
-    user_id,
-    project_name,
-    start_date,
-    end_date,
-    investment,
-    project_info,
-    project_video,
-    project_images_data,
-    project_abstract
-  });
-  post('/CreateProject', {
-    user_name,
-    user_id,
-    project_name,
-    start_date,
-    end_date,
-    investment,
-    project_info,
-    project_video,
-    project_images_data,
-    project_abstract
+    console.log(image);
+    /*for (var i = 0; i < project_images.length-1; i++) {
+      project_images_data.push(getBase64(project_images[i].files[0]))
+    }
+    project_images_data.push(getBase64(project_images[project_images.length-1]))*/
+
+    console.log(JSON.stringify(project_images_data));
+
+    const project_abstract = CreateProject
+      .querySelector('.project_abstract')
+      .value;
+    //project_image = projectImageData.toString();
+    //console.log(btoa(project_image.toString()));
+
+    //console.log(JSON.stringify(project_image));
+    /*const new_image = document
+        .getElementById('image_0')
+        .files[0]*/
+    console.log({
+      user_name,
+      user_id,
+      project_name,
+      start_date,
+      end_date,
+      investment,
+      project_info,
+      project_video,
+      project_images_data,
+      project_abstract
+    });
+    post('/CreateProject', {
+      user_name,
+      user_id,
+      project_name,
+      start_date,
+      end_date,
+      investment,
+      project_info,
+      project_video,
+      project_images_data,
+      project_abstract
+    })
+      .then(response => {
+        if (response.ok)
+          return response.text();
+        }
+      )
+      .then(data => {
+        getProjectPage(user_name, project_name)
+      })
+      .catch(error => {
+        console.log('Error is', error);
+      })
   })
-    .then(response => {
-      if (response.ok)
-        return response.text();
-      }
-    )
-    .then(data => {
-      getProjectPage(user_name, project_name)
-    })
-    .catch(error => {
-      console.log('Error is', error);
-    })
-    /*getBase64(project_image).then((projectImageData) => {
-
-  })*/
-
   }
 
 function updateProject() {
