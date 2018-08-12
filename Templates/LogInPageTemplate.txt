@@ -3,4 +3,9 @@
   <input type="text" class="username" placeholder="username"> </br>
   <input type="password" class="password" placeholder="password">
   <button class="formButton" onclick="logIn()">Log in</button>
+  <h2 class="bold">
+    Dont have a user? sign up now!
+  </h2>
+  <button class="formButton" onclick="getSignUpPage()">Sign Up Now!</button>
+
 </div>

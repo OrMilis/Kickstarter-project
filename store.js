@@ -427,21 +427,16 @@ module.exports = {
   }
 
   function genarateAdminPage() {
-    var adminTables = ''
-    return generateAdminUserTabel().then(usersTabel => {
-      adminTables += usersTabel
+    return generateAdminUserTabel()
+    .then(usersTable => {
       return generateAdminProjectTabel()
         .then(projectsTable => {
-          adminTables += projectsTable
-          return adminTables
-        })
-        .then(adminTables => {
           return fs
             .readFile(adminPageTemplatePath)
             .then(adminPage => {
               adminPage = adminPage.toString()
-              adminPage = template(adminPage, {adminTables})
-              return adminPage
+              adminPage = template(adminPage, {usersTable, projectsTable})
+              return adminPage;
             })
         })
     })

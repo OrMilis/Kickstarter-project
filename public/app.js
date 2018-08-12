@@ -288,6 +288,10 @@ Invest.addEventListener('submit', (e) => {
 })
 */
 function invest() {
+  if (logedInUser.id == -1) {
+    alert("Please Log In")
+    return
+  }
   const Invest = document.querySelector('.Pledge')
   const user_id = logedInUser.id;
   const project_name = currentProject.project_name
@@ -467,6 +471,7 @@ function getLoginPage() {
       document
         .querySelector('.Body')
         .innerHTML = data;
+
       closeProjectPage()
     })
     .catch(error => {
@@ -626,10 +631,27 @@ function logIn() {
       console.log(logedInUser);
       getProfilePage()
     })
+    .then(() => {
+      const logInButton = document.querySelector('.loginTab')
+      logInButton.innerHTML = "Sign out"
+      logInButton.onclick = logOut
+    })
     .catch(error => {
       console.log('Error is', error);
     })
   }
+
+function logOut() {
+  logedInUser.username = ""
+  logedInUser.id = -1
+  logedInUser.permissions = ''
+  const logInButton = document.querySelector('.loginTab')
+  logInButton.innerHTML = "Log In"
+  logInButton.onclick = getLoginPage
+  const profileTab = document.querySelector('.profileTab')
+  profileTab.style.visibility = "hidden"
+  getHomepage()
+}
 
 function signUp() {
   const CreateUser = document.querySelector('.Body')
@@ -639,7 +661,10 @@ function signUp() {
   const password = CreateUser
     .querySelector('.password')
     .value
-  post('/createUser', {username, password})
+    post('/createUser', {username, password})
+    .then(() => {
+      logIn()
+    })
 }
 
 function deleteUser() {

@@ -1,12 +1,22 @@
-<div class="adminTables">
-  ${adminTables}
+<div class="profilePage">
   <div>
-    <span class="backersList"></span>
-    <button onclick="getAllBackers()">Get all backers</button>
+    <h1>Welcome, Admin!</h1>
   </div>
+  <div class="profilePageBody">
+    <div class="profileProjectList">
+      <h2>Projects created</h2>
+      <div>${projectsTable}</div>
+      <button class="formButton" onclick="getAllBackers()">Get all backers</button>
+    </div>
+    <div class="profileUsersList">
+      <h2>Users </h2>
+      <div>${usersTable}</div>
+    </div>
+  </div>
+  <div class="backersList"></div>
 
   <div>
-    <button onclick="deleteUser();" id="deleteUserClick">delete user</button>
-    <button onclick="deleteProject();" id="deleteProjectClick">delete Project</button>
+    <button class="formButton" onclick="deleteUser();" id="deleteUserClick">delete user</button>
+    <button class="formButton" onclick="deleteProject();" id="deleteProjectClick">delete Project</button>
   </div>
 </div>
