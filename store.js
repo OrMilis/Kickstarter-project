@@ -603,12 +603,11 @@ module.exports = {
   }
 
   function generatePicturesBlock(imagesData) {
-    var imageTemplate = '<img src="${image}" alt="projcet pic" width="400" height="400">'
+    var imageTemplate = '<img src="${image}" width="65%">'
     var imageBlock = ""
     for (var i = 0; i < imagesData.length; i++) {
       var image = imagesData[i]
       imageBlock += template(imageTemplate, {image});
-      console.log(imageBlock);
     }
     return imageBlock
   }

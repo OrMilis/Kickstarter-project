@@ -15,9 +15,8 @@
 </div>
 <div class="video_statistics showcase ">
   <span class="video">
-    <video width="100%" controls>
-      <source src="${data.project_video}" type="video/mp4">
-    </video>
+    <iframe width="100%" height="100%" controls src="https://www.youtube.com/embed/${data.project_video}">
+    </iframe>
   </span>
   <span class="statistics">
     <div id="myProgress">

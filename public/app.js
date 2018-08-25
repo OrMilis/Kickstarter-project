@@ -145,10 +145,13 @@ function createProject() {
     .value
   const project_info = CreateProject
     .querySelector('.project_info')
-    .value
-  const project_video = CreateProject
+    .value.replace(/(?:\r\n|\r|\n)/g, '<br>')
+  var project_video = CreateProject
     .querySelector('.project_video')
-    .value
+    .value;
+
+    project_video = project_video.substring(project_video.indexOf('=') + 1);
+
   var project_images = CreateProject.getElementsByClassName('project_images') //querySelector('.project_images')
   console.log(project_images.length);
   var project_images_data = []
@@ -176,17 +179,10 @@ function createProject() {
       /*const new_image = document
         .getElementById('image_0')
         .files[0]*/
+        console.log("After:")
       console.log({
-        user_name,
-        user_id,
-        project_name,
-        start_date,
-        end_date,
-        investment,
         project_info,
-        project_video,
-        project_images_data,
-        project_abstract
+        project_video
       });
       post('/CreateProject', {
         user_name,
@@ -218,16 +214,17 @@ function updateProject() {
   const UpdateProject = document.querySelector('.UpdateProject')
   currentProject.project_info = UpdateProject
     .querySelector('.project_info')
-    .value
+    .value.replace(/(?:\r\n|\r|\n)/g, '<br>')
   currentProject.project_video = UpdateProject
     .querySelector('.project_video')
-    .value
-  currentProject.project_image = UpdateProject
-    .querySelector('.project_image')
     .value
   currentProject.project_abstract = UpdateProject
     .querySelector('.project_abstract')
     .value
+
+      currentProject.project_video = currentProject.project_video
+      .substring(currentProject.project_video.indexOf('=') + 1);
+
     post('/updateProject', currentProject)
     .then((response) => {
       if (response.ok)
@@ -259,13 +256,10 @@ function editProjectPage() {
       const UpdateProject = document.querySelector('.UpdateProject')
       UpdateProject
         .querySelector('.project_info')
-        .value = currentProject.project_info;
+        .value = currentProject.project_info.replace(/<br\s*[\/]?>/gi, "\n");
       UpdateProject
         .querySelector('.project_video')
-        .value = currentProject.project_video;
-      UpdateProject
-        .querySelector('.project_image')
-        .value = currentProject.project_image;
+        .value = 'www.youtube.com/watch?v=' + currentProject.project_video;
       UpdateProject
         .querySelector('.project_abstract')
         .value = currentProject.project_abstract;

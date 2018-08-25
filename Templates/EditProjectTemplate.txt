@@ -1,10 +1,9 @@
-<div>
+<div class="UpdateProjectBox">
   <form class="UpdateProject">
     <h1>Update Project</h1>
-    <input type="text" class="project_info" placeholder="project_info">
+    <textarea class="project_info" placeholder="project_info" rows="8"></textarea>
     <input type="text" class="project_video" placeholder="project_video">
-    <input type="text" class="project_image" placeholder="project_image">
     <input type="text" class="project_abstract" placeholder="project_abstract">
   </form>
-  <button onclick="updateProject()">Update</button>
+  <button class="formButton" onclick="updateProject()">Update</button>
 </div>
